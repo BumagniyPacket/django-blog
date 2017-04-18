@@ -1,2 +1,1 @@
-Сначала создал проект командой:
-django-admin startproject DjangoBlog
+## Пример блога на Джанго.
