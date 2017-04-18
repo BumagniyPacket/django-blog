@@ -1,0 +1,7 @@
+.venv/
+.directory
+.idea
+*.sqlite3
+*migrations/
+
+*.pyc

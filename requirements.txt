@@ -1,0 +1,9 @@
+Django==1.10.5
+django-markdown==0.8.4
+django-pagedown==0.1.1
+Markdown==2.6.8
+mock==2.0.0
+olefile==0.44
+pbr==1.10.0
+psycopg2==2.7.1
+six==1.10.0
