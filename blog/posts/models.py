@@ -54,7 +54,8 @@ class Post(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    slug = slugify(instance.title)
+    title = rus2eng(instance.title)
+    slug = slugify(title)
     if new_slug is not None:
         slug = new_slug
     qs = Post.objects.filter(slug=slug).order_by("-id")
@@ -65,9 +66,28 @@ def create_slug(instance, new_slug=None):
     return slug
 
 
+def rus2eng(text):
+    """Converts a phone number with letters into its numeric equivalent."""
+    char2number = {
+        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
+        'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i',
+        'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
+        'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
+        'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch',
+        'ш': 'sh', 'щ': 'shc', 'ъ': '', 'ы': 'i', 'ь': '',
+        'э': 'e', 'ю': 'u', 'я': 'ya',
+    }
+    return ''.join(char2number.get(c, c) for c in text.lower())
+
+
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
 
 
 pre_save.connect(pre_save_post_receiver, sender=Post)
+
+if __name__ == '__main__':
+    line = 'Привет как дела это слагифайный текст который я удалю после теста'
+    new_line = rus2eng(line)
+    print(new_line)
