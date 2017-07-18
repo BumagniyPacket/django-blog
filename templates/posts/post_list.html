@@ -4,9 +4,11 @@
 
 {% block content %}
 
-  <div class="search-wrapper">
+  {% include "posts/header.html" %}
+
+  <div id="searchWrapper">
     <form class="search-form" action="" method="get">
-      <input type="text" name="q" id="search" placeholder="Поиск постов"
+      <input type="text" name="q" id="search" placeholder="Поиск постов по содержанию и описанию"
              value="{{ request.GET.q }}">
       <input type="submit" name="action" value="Поиск">
     </form>
