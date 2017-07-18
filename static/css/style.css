@@ -30,6 +30,47 @@ a {
   width: 100%;
 }
 
+
+section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid black;
+}
+
+input#tab1, input#tab2 {
+  display: none;
+}
+
+label.tabLabel {
+  cursor:pointer;
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 10px 25px;
+  font-weight: 600;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+input:checked + label {
+  color: #555;
+  border: 1px solid black;
+  border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2 {
+  display: block;
+}
+
+.pathPointers {
+  margin: 20px 0;
+  padding: 0px;
+}
+.pathPointers > a {
+  font-size: 1.5em;
+  margin-right: 25px;
+}
+
 input, textarea {
   border: 1px solid black;
   /*-webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);*/
@@ -103,7 +144,7 @@ input[type='checkbox'] {
   width: 49%;
 }
 
-/*search form*/
+/* search form */
 form.search-form input[type='text'] {
   width: 74%;
 }
@@ -112,12 +153,10 @@ form.search-form input[type='submit'] {
   float: right;
   width: 25%;
 }
+/* end search form */
 
-/*end search form*/
-
-/*pagination*/
+/* pagination */
 .pagination {
   margin-top: 0;
 }
-
-/*end pagination*/
+/* end pagination */
