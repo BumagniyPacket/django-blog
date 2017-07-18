@@ -35,6 +35,9 @@ class Post(models.Model):
     def get_delete_url(self):
         return '%sdelete' % self.get_absolute_url()
 
+    def get_edit_url(self):
+        return '%sedit' % self.get_absolute_url()
+
     def get_markdown(self):
         content = self.content
         markdown_text = markdown(content)
@@ -76,7 +79,7 @@ def rus2eng(text):
         'ш': 'sh', 'щ': 'shc', 'ъ': '', 'ы': 'i', 'ь': '',
         'э': 'e', 'ю': 'u', 'я': 'ya',
     }
-    return ''.join(char2number.get(_, _) for _ in text.lower())
+    return ''.join(char2number[_] for _ in text.lower())
 
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
