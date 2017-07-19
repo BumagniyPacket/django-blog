@@ -15,12 +15,12 @@ $(document).ready(function () {
 $(function () {
   $.fn.scrollToTop = function () {
     $(this).hide().removeAttr("href");
-    if ($(window).scrollTop() != "0") {
+    if ($(window).scrollTop() !== "0") {
       $(this).fadeIn("slow");
     }
     var scrollDiv = $(this);
     $(window).scroll(function () {
-      if ($(window).scrollTop() == "0") {
+      if ($(window).scrollTop() === "0") {
         $(scrollDiv).fadeOut("slow");
       } else {
         $(scrollDiv).fadeIn("slow");
@@ -29,7 +29,7 @@ $(function () {
     $(this).click(function () {
       $("html, body").animate({scrollTop: 0}, "slow");
     });
-  }
+  };
 });
 
 $(function () {
@@ -45,7 +45,7 @@ function setContent(value) {
     $(this).addClass("img-responsive");
   });
 }
-setContent(contentInput.val())
+setContent(contentInput.val());
 contentInput.keyup(function () {
   var newContent = $(this).val();
   setContent(newContent);
