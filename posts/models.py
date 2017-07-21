@@ -17,7 +17,7 @@ class Post(models.Model):
     title = models.CharField(max_length=120)
     image = models.CharField(max_length=100)
     description = models.TextField(max_length=400)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
     content = models.TextField()
     draft = models.BooleanField(default=False)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
@@ -28,6 +28,12 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        print(self.title)
+        self.slug = create_slug(self)
+        # self.slug = slugify(self.title, allow_unicode=True)
+        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse("posts:detail", kwargs={"slug": self.slug})
@@ -56,8 +62,7 @@ class Post(models.Model):
 
 
 def create_slug(instance, new_slug=None):
-    title = rus2eng(instance.title)
-    slug = slugify(title)
+    slug = slugify(instance.title, allow_unicode=True)
     if new_slug is not None:
         slug = new_slug
     qs = Post.objects.filter(slug=slug).order_by("-id")
@@ -66,25 +71,3 @@ def create_slug(instance, new_slug=None):
         new_slug = "%s-%s" % (slug, qs.first().id)
         return create_slug(instance, new_slug=new_slug)
     return slug
-
-
-def rus2eng(text):
-    """Converts a phone number with letters into its numeric equivalent."""
-    char2number = {
-        'а': 'a', 'б': 'b', 'в': 'v', 'г': 'g', 'д': 'd',
-        'е': 'e', 'ё': 'e', 'ж': 'j', 'з': 'z', 'и': 'i',
-        'й': 'y', 'к': 'k', 'л': 'l', 'м': 'm', 'н': 'n',
-        'о': 'o', 'п': 'p', 'р': 'r', 'с': 's', 'т': 't',
-        'у': 'u', 'ф': 'f', 'х': 'h', 'ц': 'c', 'ч': 'ch',
-        'ш': 'sh', 'щ': 'shc', 'ъ': '', 'ы': 'i', 'ь': '',
-        'э': 'e', 'ю': 'u', 'я': 'ya',
-    }
-    return ''.join(char2number[_] for _ in text.lower())
-
-
-def pre_save_post_receiver(sender, instance, *args, **kwargs):
-    if not instance.slug:
-        instance.slug = create_slug(instance)
-
-
-pre_save.connect(pre_save_post_receiver, sender=Post)
