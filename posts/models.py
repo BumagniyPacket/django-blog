@@ -29,10 +29,11 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        print(self.title)
         self.slug = create_slug(self)
-        # self.slug = slugify(self.title, allow_unicode=True)
         super(Post, self).save(*args, **kwargs)
+
+    def get_comments(self):
+        return self.comments.all().order_by('-timestamp')
 
     def get_absolute_url(self):
         return reverse("posts:detail", kwargs={"slug": self.slug})
@@ -42,11 +43,6 @@ class Post(models.Model):
 
     def get_edit_url(self):
         return '%sedit' % self.get_absolute_url()
-
-    def get_markdown(self):
-        content = self.content
-        markdown_text = markdown(content)
-        return mark_safe(markdown_text)
 
     def add_view(self):
         self.views += 1
