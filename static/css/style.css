@@ -4,11 +4,10 @@
 
 a {
   text-decoration: none !important;
+  cursor: pointer;
 }
 
 .container {
-  /*margin: 0 auto;*/
-  /*width: 70%;*/
   max-width: 800px;
 }
 
@@ -23,7 +22,6 @@ a {
   margin-top: 10px;
   margin-bottom: 25px;
   border: 1px solid black;
-  /*box-shadow: 1px 1px 10px #005361;*/
 }
 
 .post img {
@@ -73,9 +71,6 @@ input:checked + label {
 
 input, textarea {
   border: 1px solid black;
-  /*-webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);*/
-  /*-moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);*/
-  /*box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);*/
   padding: 10px;
   background-color: white;
   margin: 0 0 10px 0;
@@ -160,3 +155,16 @@ form.search-form input[type='submit'] {
   margin-top: 0;
 }
 /* end pagination */
+
+/* comments */
+.comment {
+  border: 1px solid rgb(235,235,235);
+  padding: 0px 20px 0px 20px;
+  margin-bottom: 7px;
+  background-color: rgb(245,245,245);
+}
+#show_comment_form {
+  font-size: 1.5em;
+}
+
+/* end comments */

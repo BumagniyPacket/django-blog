@@ -1,3 +1,11 @@
+// comments
+$("#comment_form").hide();
+$("#show_comment_form").click(function () {
+  $("#comment_form").show();
+  $(this).hide();
+})
+//
+
 $(document).ready(function () {
   $(".content-markdown").each(function () {
     var content = $(this).text();
@@ -30,9 +38,6 @@ $(function () {
       $("html, body").animate({scrollTop: 0}, "slow");
     });
   };
-});
-
-$(function () {
   $("#toTopWrapper").scrollToTop();
 });
 

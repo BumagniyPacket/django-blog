@@ -1,0 +1,10 @@
+{% for comment in instance.get_comments %}
+
+<div class="comment">
+  <p><b>{{ comment.author }}</b> написал {{ comment.timestamp|timesince }} назад</p>
+  <p>{{ comment.text|linebreaks }}</p>
+</div>
+
+{% empty %}
+<p>Комментариев пока нет</p>
+{% endfor %}
