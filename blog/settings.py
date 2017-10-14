@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 
 try:
-    from local_settings import *
+    from blog.local_settings import *
 except ImportError:
     pass
 
@@ -32,7 +32,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pagedown',
-    'posts',
+    'blog.posts',
+    'blog.comments',
 ]
 
 MIDDLEWARE = [
