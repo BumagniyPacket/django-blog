@@ -21,6 +21,8 @@
       <img src="{{ obj.image }}">
       <p><i>{{ obj.description }}</i> <a href='{{ obj.get_absolute_url }}'>Читать дальше</a></p>
     </div>
+  {% empty %}
+    <p>Посты не найдены...</p>
   {% endfor %}
 
   <div class="pagination center">

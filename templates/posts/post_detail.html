@@ -26,6 +26,9 @@
   {% if instance.timestamp != instance.updated %}
   <p><b>Отрадактировано</b>: {{ instance.updated }}</p>
   {% endif %}
+
+  {% include "comments/comments_wrap.html" %}
+
 </div>
 
 {% endblock content %}
