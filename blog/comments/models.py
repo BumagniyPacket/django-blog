@@ -4,6 +4,10 @@ from blog.posts.models import Post
 
 
 class Comment(models.Model):
+    class Meta:
+        verbose_name = "Блог - комментарий"
+        verbose_name_plural = "Блог - комментарии"
+
     post = models.ForeignKey(Post, related_name='comments')
     author = models.CharField(max_length=50, default='anon')
     timestamp = models.DateTimeField(auto_now=True)
