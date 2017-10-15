@@ -1,160 +1,172 @@
+/*s etogo momenta nachinaetsya novaya*/
 * {
-  font-family: Arial;
+    margin: 0px;
+    padding: 0px;
+}
+
+@font-face {
+    font-family: BebasNeueRegular;
+    src: url('../fonts/9115.otf');
+}
+
+body {
+    background-color: #cfd8dc;
+
+    font-family: 'Open Sans', Helvetica, Arial;
+    font-size: 0.8em;
+    color: #212121;
 }
 
 a {
-  text-decoration: none !important;
-  cursor: pointer;
+    text-decoration: none;
+}
+
+h1 {
+    font-family: "BebasNeueRegular", Helvetica, Arial;
+    color: #455a64;
+    font-size: 1.5em;
+}
+
+h2 {
+    font-family: "BebasNeueRegular", Helvetica, Arial;
+    font-size: 1.7em;
+    color: white;
+}
+
+hr {
+    color: green;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1.5px solid #ddd;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.header {
+    padding-top: 10px;
+    background-color: #03a9f4;
+}
+
+.menu {
+    background-color: #03a9f4;
+    padding-top: 10px;
+    border-bottom: 3px solid #BDBDBD;
+    z-index: 1000;
+}
+
+.navigation {
+    display: inline-block;
+    height: 25px;
+}
+
+.navigation li{
+    font-family: "BebasNeueRegular", Helvetica, Arial;
+    display: inline;
+    color: white;
+    font-size: 1.3em;
+    margin-right: 10px;
+}
+
+div.search-wrapper {
+    display: inline-block;
+    float: right;
+}
+
+div.search-icon {
+    display: inline-block;
+    float: right;
+    height: 15px;
+    width: 15px;
+    cursor: pointer;
+    background-size: cover;
+    background-image: url('../pics/search-icon.png');
+}
+
+input.search-field {
+    max-width: 200px;
+    text-align: center;
+    display: block;
+    color: white;
+    background-color: #7aadff;
+    border: none;
+    height: 18px;
+    padding: 0px 10px;
+    border-radius: 5px;
+}
+
+input.search-field:focus {
+    box-shadow: 0px 0px 10px white;
+    background-color: white;
+    color: grey;
 }
 
 .container {
-  max-width: 800px;
+    max-width: 500px;
+    margin: 5px auto;
+    margin: auto;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-.layout__elevator {
-  position: fixed;
-  top: 48vh;
-  left: 10px;
+.item {
+    position: relative;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 20px;
+    padding-bottom: 35px;
+    z-index: 1;
 }
 
-.post {
-  padding: 0 20px 10px;
-  margin-top: 10px;
-  margin-bottom: 25px;
-  border: 1px solid black;
+.date {
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+    color: #455a64;
+    background-color: #f1f1f1;
+    padding: 2px 5px;
 }
 
-.post img {
-  width: 100%;
+.description {
+    margin-top: 15px;
 }
 
-
-section {
-  display: none;
-  padding: 20px 0 0;
-  border-top: 1px solid black;
+.tags {
+    margin-top: 10px;
 }
 
-input#tab1, input#tab2 {
-  display: none;
+.tags p {
+    display: inline;
+    background-color: #607d8b;
+    color:white;
+    padding: 3px 10px;
+    border-radius: 5px;
+    line-height: 25px;
 }
 
-label.tabLabel {
-  cursor:pointer;
-  display: inline-block;
-  margin: 0 0 -1px;
-  padding: 10px 25px;
-  font-weight: 600;
-  text-align: center;
-  border: 1px solid transparent;
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
 }
 
-input:checked + label {
-  color: #555;
-  border: 1px solid black;
-  border-bottom: 1px solid #fff;
+.footer-link {
+    display: inline-block;
+    width: 25%;
 }
 
-#tab1:checked ~ #content1,
-#tab2:checked ~ #content2 {
-  display: block;
+.fixed {
+    margin: auto;
+    width: 100%;
+    position:fixed;
+    top:0;
 }
-
-.pathPointers {
-  margin: 20px 0;
-  padding: 0px;
-}
-.pathPointers > a {
-  font-size: 1.5em;
-  margin-right: 25px;
-}
-
-input, textarea {
-  border: 1px solid black;
-  padding: 10px;
-  background-color: white;
-  margin: 0 0 10px 0;
-  width: 100%;
-}
-
-.wmd-panel {
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
-
-input[type='submit'] {
-  cursor: pointer;
-}
-
-input[type='submit']:hover {
-  color: white;
-  background-color: black;
-  transition-duration: .5s;
-}
-
-input[type='checkbox'] {
-  width: inherit;
-}
-
-.center {
-  width: 100%;
-  text-align: center;
-}
-
-/* upper */
-#toTopWrapper {
-  width: 55px;
-  height: 100%;
-  background-color: lightgrey;
-  position: fixed;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  opacity: .3;
-}
-
-#toTopWrapper:hover {
-  opacity: .6;
-  transition-duration: 2s;
-}
-
-#toTop {
-  position: fixed;
-  top: 45vh;
-  left: 10px;
-}
-
-/* end upper */
-
-.wmd-preview img {
-  width: 100%;
-}
-
-.wmd-preview {
-  padding: 10px;
-}
-
-.content-form, .content-preview {
-  display: inline-block;
-  width: 49%;
-}
-
-/* search form */
-form.search-form input[type='text'] {
-  width: 74%;
-}
-
-form.search-form input[type='submit'] {
-  float: right;
-  width: 25%;
-}
-/* end search form */
-
-/* pagination */
-.pagination {
-  margin-top: 0;
-}
-/* end pagination */
 
 /* comments */
 .comment {
@@ -168,3 +180,7 @@ form.search-form input[type='submit'] {
 }
 
 /* end comments */
+
+.updated {
+  margin-top: 20px;
+}

@@ -1,67 +1,22 @@
-// comments
-$("#comment_form").hide();
-$("#show_comment_form").click(function () {
-  $("#comment_form").show();
-  $(this).hide();
+// novie skripti
+$(".search-wrapper").hide();
+$(".search-field").focusout(function() {
+    $('.search-icon').show();
+    $('.search-wrapper').hide();
 })
-//
 
-$(document).ready(function () {
-  $(".content-markdown").each(function () {
-    var content = $(this).text();
-    var markedContent = marked(content);
-    $(this).html(markedContent);
-  });
-  $(".content-markdown img").each(function () {
-    var content = $(this).text();
-    var markedContent = marked(content);
-    $(this).html(markedContent);
-  });
-});
+$(".search-icon").click(function() {
+    $('.search-icon').hide();
+    $('.search-wrapper').show();
+    $('.search-field').focus();
+})
 
-//back to top
-$(function () {
-  $.fn.scrollToTop = function () {
-    $(this).hide().removeAttr("href");
-    if ($(window).scrollTop() !== "0") {
-      $(this).fadeIn("slow");
+// fix menu after scrolling
+var num = 40; //number of pixels before modifying styles
+$(window).bind('scroll', function () {
+    if ($(window).scrollTop() > num) {
+        $('.menu').addClass('fixed');
+    } else {
+        $('.menu').removeClass('fixed');
     }
-    var scrollDiv = $(this);
-    $(window).scroll(function () {
-      if ($(window).scrollTop() === "0") {
-        $(scrollDiv).fadeOut("slow");
-      } else {
-        $(scrollDiv).fadeIn("slow");
-      }
-    });
-    $(this).click(function () {
-      $("html, body").animate({scrollTop: 0}, "slow");
-    });
-  };
-  $("#toTopWrapper").scrollToTop();
-});
-
-// content preview
-var contentInput = $("#id_content");
-function setContent(value) {
-  var markedContent = marked(value);
-  $("#preview-content").html(markedContent);
-  $("#preview-content img").each(function () {
-    $(this).addClass("img-responsive");
-  });
-}
-setContent(contentInput.val());
-contentInput.keyup(function () {
-  var newContent = $(this).val();
-  setContent(newContent);
-});
-var titleInput = $("#id_title");
-
-function setTitle(value) {
-  $("#preview-title").text(value);
-}
-setTitle(titleInput.val());
-titleInput.keyup(function () {
-  var newContent = $(this).val();
-  setTitle(newContent);
 });
