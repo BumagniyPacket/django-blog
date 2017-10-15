@@ -3,14 +3,13 @@
 {% block head_title %}{{ instance.title }} | {{ block.super }} {% endblock head_title %}
 
 {% block content %}
-<a href="{% url 'posts:list' %}">{% include "posts/header.html" %}</a>
 
-<div class="post">
-  <h2>{{ instance.title }}
+<div class="item">
+  <h1>{{ instance.title }}
     {% if user.is_authenticated %}
     | <a href="{{ instance.get_edit_url }}">Редактировать</a>
     {% endif %}
-  </h2>
+  </h1>
   {% if instance.user.get_full_name %}
   <p>Автор: <b>{{ instance.user.get_full_name }}</b>
     {% else %}
@@ -24,7 +23,7 @@
   <p class="content-markdown">{{ instance.content }}</p>
 
   {% if instance.timestamp != instance.updated %}
-  <p><b>Отрадактировано</b>: {{ instance.updated }}</p>
+  <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
   {% endif %}
 
   {% include "comments/comments_wrap.html" %}

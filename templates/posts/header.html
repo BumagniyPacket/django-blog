@@ -1,3 +1,22 @@
-<div class=" header">
-  <h1>Лучший блог на этой планете</h1>
+<div class="header">
+    <div class="container blog-title">
+        <h2>Этот бложик самый лучший бложик на земле.</h2>
+    </div>
+    <div class="menu">
+        <div class="container">
+            <div class="navigation">
+                <ul>
+                    <a href="{% url 'posts:list' %}"><li>Главная</li></a>
+                    <li>Абоут</li>
+                </ul>
+            </div>
+            <div class="search-wrapper">
+                <form class="search-form" action="" method="get">
+                    <input type="text" name="q" id="search" class="search-field" placeholder="Введите слова для поиска"
+                           value="{{ request.GET.q }}">
+                </form>
+            </div>
+            <div class="search-icon"></div>
+        </div>
+    </div>
 </div>
