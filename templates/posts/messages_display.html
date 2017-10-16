@@ -1,9 +1,10 @@
 {% if messages %}
-  <div class="messages">
-    {% for message in messages %}
-      <script type="text/javascript">
+<div class="messages">
+  {% for message in messages %}
+  <script type="text/javascript">
         alert('{{ message }}');
-      </script>
-    {% endfor %}
-  </div>
+
+  </script>
+  {% endfor %}
+</div>
 {% endif %}

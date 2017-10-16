@@ -5,21 +5,21 @@
 
 {% include "posts/header.html" %}
 <div class="container">
-    {% block content %}
-    {% endblock %}
+  {% block content %}
+  {% endblock %}
 
-    {% include "posts/footer.html" %}
+  {% include "posts/footer.html" %}
 </div>
 
 {# back to top #}
 <div id="toTopWrapper" style="display: none;">
-    <div id="toTop">
-        <svg class="icon-svg icon-svg_scroll-up" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"
-             version="1.1"
-             role="img">
-            <path transform="rotate(90, 16, 16)" d="m27.2,6.2-10.4,10l10.4,10l-6,5.8l-16.4,-16l16.4,-16"></path>
-        </svg>
-    </div>
+  <div id="toTop">
+    <svg class="icon-svg icon-svg_scroll-up" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"
+         version="1.1"
+         role="img">
+      <path transform="rotate(90, 16, 16)" d="m27.2,6.2-10.4,10l10.4,10l-6,5.8l-16.4,-16l16.4,-16"></path>
+    </svg>
+  </div>
 </div>
 {# end back to top #}
 
@@ -33,12 +33,12 @@
 {% include 'posts/messages_display.html' %}
 </body>
 <head>
-    <meta charset="UTF-8">
-    <title>{% block head_title %}Roma blog{% endblock head_title %}</title>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+  <meta charset="UTF-8">
+  <title>{% block head_title %}Roma blog{% endblock head_title %}</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 
-    {% block head_extra %} {% endblock head_extra %}
+  {% block head_extra %} {% endblock head_extra %}
 </head>
 </html>

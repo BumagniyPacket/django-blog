@@ -10,17 +10,19 @@
     | <a href="{{ instance.get_edit_url }}">Редактировать</a>
     {% endif %}
   </h1>
-  {% if instance.user.get_full_name %}
-  <p>Автор: <b>{{ instance.user.get_full_name }}</b>
+  <p class="description">
+    {% if instance.user.get_full_name %}
+    Автор: <b>{{ instance.user.get_full_name }}</b>
     {% else %}
-  <p>Автор: <b>{{ instance.user }}</b>
+    Автор: <b>{{ instance.user }}</b>
     {% endif %}
     | {{ instance.timestamp|timesince }} назад
-    | <b>Просмотров</b>: {{ instance.views }}</p>
-
-  <img src="{{ instance.image }}" width="100%" alt="">
-  <i><p>{{ instance.description }}</p></i>
-  <p class="content-markdown">{{ instance.content }}</p>
+    | <b>Просмотров</b>: {{ instance.views }}
+  </p>
+  <hr>
+  <img src="{{ instance.image }}" alt="">
+  <i><p class="description">{{ instance.description }}</p></i>
+  <p class="description content-markdown">{{ instance.content }}</p>
 
   {% if instance.timestamp != instance.updated %}
   <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
