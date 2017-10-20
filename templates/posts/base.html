@@ -32,13 +32,13 @@
 </div>
 {# end back to top #}
 
-<script
-        src="https://code.jquery.com/jquery-3.2.1.js"
+<script src="https://code.jquery.com/jquery-3.2.1.js"
         integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
         crossorigin="anonymous"></script>
-<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
 <script src='{% static "js/script.js" %}'></script>
-
+{% block scripts %}
+{% endblock %}
 {% include 'posts/messages_display.html' %}
 </body>
 
