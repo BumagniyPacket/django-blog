@@ -1,4 +1,4 @@
-// novie skripti
+// search form
 $(".search-wrapper").hide();
 $(".search-field").focusout(function() {
     $('.search-icon').show();
@@ -7,8 +7,9 @@ $(".search-field").focusout(function() {
 
 $(".search-icon").click(function() {
     $('.search-icon').hide();
-    $('.search-wrapper').show();
+    $('.search-wrapper').fadeIn(200);
     $('.search-field').focus();
+    $('.search-field').val('');
 })
 
 // fix menu after scrolling
