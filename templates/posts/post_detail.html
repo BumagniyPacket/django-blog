@@ -22,7 +22,10 @@
   <hr>
   <img src="{{ instance.image }}" alt="">
   <i><p class="description">{{ instance.description }}</p></i>
-  <p class="description content-markdown">{{ instance.content }}</p>
+  {% load markdown_deux_tags %}
+  <div class="content-markdown">
+    <p class="description">{{ instance.content|markdown }}</p>
+  </div>
 
   {% if instance.timestamp != instance.updated %}
   <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
