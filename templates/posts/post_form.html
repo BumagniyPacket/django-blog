@@ -10,8 +10,6 @@
 
 <div class="item">
   <div id="post_form">
-    <!--<h1>Создание/Редактирование поста</h1>-->
-
     <input id="tab1" type="radio" name="tabs" checked>
     <label class="tabLabel" for="tab1"><h3>Редактирование</h3></label>
 
@@ -38,3 +36,7 @@
 </div>
 
 {% endblock content %}
+{% load staticfiles %}
+{% block scripts %}
+<script src='{% static "js/form.js" %}'></script>
+{% endblock %}

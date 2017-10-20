@@ -1,4 +1,3 @@
-/*s etogo momenta nachinaetsya novaya*/
 * {
     margin: 0px;
     padding: 0px;
@@ -17,24 +16,26 @@ body {
     color: #212121;
 }
 
-a {
+a, a:visited, a:active {
+    color: #455a64;
     text-decoration: none;
 }
 
-h1 {
+h1, h2, h3, h4 {
     font-family: "BebasNeueRegular", Helvetica, Arial;
+}
+
+h1 {
     color: #455a64;
     font-size: 1.5em;
 }
 
-h2 {
-    font-family: "BebasNeueRegular", Helvetica, Arial;
+div.blog-title h2 {
     font-size: 1.7em;
     color: white;
 }
 
 hr {
-    color: green;
     margin-top: 5px;
     margin-bottom: 10px;
     border: none;
@@ -87,23 +88,6 @@ div.search-icon {
     background-image: url('../pics/search-icon.png');
 }
 
-input.search-field {
-    max-width: 200px;
-    text-align: center;
-    display: block;
-    color: white;
-    background-color: #7aadff;
-    border: none;
-    height: 18px;
-    padding: 0px 10px;
-    border-radius: 5px;
-}
-
-input.search-field:focus {
-    box-shadow: 0px 0px 10px white;
-    background-color: white;
-    color: grey;
-}
 
 .container {
     max-width: 500px;
@@ -117,11 +101,15 @@ input.search-field:focus {
     position: relative;
     display: block;
     margin-top: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     background-color: white;
     padding: 20px;
-    padding-bottom: 35px;
+    padding-bottom: 5px;
     z-index: 1;
+}
+
+.item-list {
+    padding-bottom: 20px;
 }
 
 .date {
@@ -171,16 +159,105 @@ input.search-field:focus {
 /* comments */
 .comment {
   border: 1px solid rgb(235,235,235);
-  padding: 0px 20px 0px 20px;
-  margin-bottom: 7px;
   background-color: rgb(245,245,245);
+  padding: 5px 15px 10px 15px;
+  margin-bottom: 7px;
 }
-#show_comment_form {
-  font-size: 1.5em;
-}
-
 /* end comments */
 
 .updated {
   margin-top: 20px;
+}
+
+#comment_form input,
+#post_form input, 
+textarea, 
+input[type="submit"] {
+  border: 1px solid #ddd;
+  background-color: white;
+  margin: 0 0 10px 0;
+  width: 100%;
+  color: black;
+  font-family: 'Open Sans', Helvetica, Arial;
+  font-size: 0.8em;
+  min-height: 25px;
+  box-sizing: border-box;
+  padding: 5px 10px;
+}
+
+input[type="checkbox"] {
+
+}
+
+input:hover {
+    background-color: black;
+    color: white;
+}
+
+.center {
+    text-align: center;
+}
+
+/* search field */
+input.search-field {
+    max-width: 200px;
+    display: block;
+    color: white;
+    background-color: #7aadff;
+    border: 0px solid black;
+    height: 18px;
+    padding: 0px 10px;
+}
+
+input.search-field:focus {
+    box-shadow: 0px 0px 10px white;
+    background-color: white;
+    color: grey;
+}
+/* end search field*/
+
+/*wmd*/
+.wmd-panel {
+    box-sizing: border-box;
+    margin: 0px !important;
+    min-width: 100% !important;
+}
+/*endwmd*/
+
+/* post editor tabs */
+section {
+  display: none;
+  padding: 20px 0 0;
+  border-top: 1px solid grey;
+}
+
+input#tab1, input#tab2 {
+  display: none;
+}
+
+label.tabLabel {
+  cursor:pointer;
+  display: inline-block;
+  margin: 0 0 -1px;
+  padding: 5px 10px;
+  text-align: center;
+  border: 1px solid transparent;
+}
+
+input:checked + label {
+  color: #555;
+  border: 1px solid grey;
+  border-bottom: 1px solid #fff;
+}
+
+#tab1:checked ~ #content1,
+#tab2:checked ~ #content2 {
+  display: block;
+}
+/* end post editor tabs*/
+
+/* content */
+.content-markdown > *,
+#preview-content > * {
+    margin: 15px 0px;
 }

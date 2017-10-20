@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pagedown',
+    'markdown_deux',
     'blog.posts',
     'blog.comments',
 ]
