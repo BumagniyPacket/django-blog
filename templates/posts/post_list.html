@@ -7,9 +7,9 @@
 <div class="content">
   {% for obj in object_list %}
   <div class="item item-list">
-    <a href="{{ obj.get_absolute_url }}">
-      <h1 class="title">{% if obj.draft %}[ DRAFT ] {% endif %}{{ obj.title|upper }}</h1>
-    </a>
+    <h1 class="title">{% if obj.draft %}[ DRAFT ] {% endif %}
+      <a href="{{ obj.get_absolute_url }}">{{ obj.title|upper }}</a>
+    </h1>
     <hr>
     <img src="{{ obj.image }}" alt="">
     <p class="description">{{ obj.description }}
