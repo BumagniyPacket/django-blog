@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 
-from comments.forms import CommentForm
+from blog.comments.forms import CommentForm
 
 from .forms import PostForm
 from .models import Post

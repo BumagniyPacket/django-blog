@@ -4,23 +4,27 @@
 <head>
   <meta charset="UTF-8">
   <title>{% block head_title %}Roma blog{% endblock head_title %}</title>
-  <link rel="shortcut icon" type="image/png" href='{% static "favicon.ico" %}'/>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel='stylesheet' href='{% static "css/bootstrap.min.css" %}'/>
-  <link rel='stylesheet' href='{% static "css/style.css" %}'/>
-
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
   {% block head_extra %} {% endblock head_extra %}
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+
 </head>
 <body>
+
+{% include "posts/header.html" %}
 <div class="container">
   {% block content %}
   {% endblock %}
+
+  {% include "posts/footer.html" %}
 </div>
 
 {# back to top #}
-<div id="toTopWrapper">
+<div id="toTopWrapper" style="display: none;">
   <div id="toTop">
-    <svg class="icon-svg icon-svg_scroll-up" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" version="1.1"
+    <svg class="icon-svg icon-svg_scroll-up" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"
+         version="1.1"
          role="img">
       <path transform="rotate(90, 16, 16)" d="m27.2,6.2-10.4,10l10.4,10l-6,5.8l-16.4,-16l16.4,-16"></path>
     </svg>
@@ -28,11 +32,14 @@
 </div>
 {# end back to top #}
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
-<script src='{% static "js/bootstrap.min.js" %}'></script>
 <script src='{% static "js/script.js" %}'></script>
-
+{% block scripts %}
+{% endblock %}
 {% include 'posts/messages_display.html' %}
 </body>
+
 </html>

@@ -3,29 +3,36 @@
 {% block head_title %}{{ instance.title }} | {{ block.super }} {% endblock head_title %}
 
 {% block content %}
-<a href="{% url 'posts:list' %}">{% include "posts/header.html" %}</a>
 
-<div class="post">
-  <h2>{{ instance.title }}
+<div class="item">
+  <h1>{{ instance.title }}
     {% if user.is_authenticated %}
     | <a href="{{ instance.get_edit_url }}">Редактировать</a>
     {% endif %}
-  </h2>
-  {% if instance.user.get_full_name %}
-  <p>Автор: <b>{{ instance.user.get_full_name }}</b>
+  </h1>
+  <p class="description">
+    {% if instance.user.get_full_name %}
+    Автор: <b>{{ instance.user.get_full_name }}</b>
     {% else %}
-  <p>Автор: <b>{{ instance.user }}</b>
+    Автор: <b>{{ instance.user }}</b>
     {% endif %}
     | {{ instance.timestamp|timesince }} назад
-    | <b>Просмотров</b>: {{ instance.views }}</p>
-
-  <img src="{{ instance.image }}" width="100%" alt="">
-  <i><p>{{ instance.description }}</p></i>
-  <p class="content-markdown">{{ instance.content }}</p>
+    | <b>Просмотров</b>: {{ instance.views }}
+  </p>
+  <hr>
+  <img src="{{ instance.image }}" alt="">
+  <i><p class="description">{{ instance.description }}</p></i>
+  {% load markdown_deux_tags %}
+  <div class="content-markdown">
+    <p class="description">{{ instance.content|markdown }}</p>
+  </div>
 
   {% if instance.timestamp != instance.updated %}
-  <p><b>Отрадактировано</b>: {{ instance.updated }}</p>
+  <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
   {% endif %}
+
+  {% include "comments/comments_wrap.html" %}
+
 </div>
 
 {% endblock content %}

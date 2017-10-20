@@ -1,9 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.safestring import mark_safe
 from django.utils.text import slugify
-from markdown import markdown
 
 
 class PostManager(models.Manager):
@@ -12,9 +10,15 @@ class PostManager(models.Manager):
 
 
 class Post(models.Model):
+    class Meta:
+        verbose_name = "Блог - пост"
+        verbose_name_plural = "Блог - посты"
+
+        ordering = ['-timestamp', '-updated']
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
     title = models.CharField(max_length=120)
-    image = models.CharField(max_length=100)
+    image = models.URLField()
     description = models.TextField(max_length=400)
     slug = models.SlugField(unique=True, blank=True)
     content = models.TextField()
@@ -29,7 +33,8 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = create_slug(self)
+        if not self.slug:
+            self.slug = create_slug(self)
         super(Post, self).save(*args, **kwargs)
 
     def get_comments(self):
@@ -51,9 +56,6 @@ class Post(models.Model):
     def get_views(self):
         views = self.views
         return views
-
-    class Meta:
-        ordering = ['-timestamp', '-updated']
 
 
 def create_slug(instance, new_slug=None):
