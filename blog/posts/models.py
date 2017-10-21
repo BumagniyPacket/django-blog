@@ -11,8 +11,8 @@ class PostManager(models.Manager):
 
 class Post(models.Model):
     class Meta:
-        verbose_name = "Блог - пост"
-        verbose_name_plural = "Блог - посты"
+        verbose_name = 'Блог - пост'
+        verbose_name_plural = 'Блог - посты'
 
         ordering = ['-timestamp', '-updated']
 
@@ -41,7 +41,7 @@ class Post(models.Model):
         return self.comments.all().order_by('-timestamp')
 
     def get_absolute_url(self):
-        return reverse("posts:detail", kwargs={"slug": self.slug})
+        return reverse('posts:detail', kwargs={'slug': self.slug})
 
     def get_delete_url(self):
         return '%sdelete' % self.get_absolute_url()
@@ -62,9 +62,9 @@ def create_slug(instance, new_slug=None):
     slug = slugify(instance.title, allow_unicode=True)
     if new_slug is not None:
         slug = new_slug
-    qs = Post.objects.filter(slug=slug).order_by("-id")
+    qs = Post.objects.filter(slug=slug).order_by('-id')
     exists = qs.exists()
     if exists:
-        new_slug = "%s-%s" % (slug, qs.first().id)
+        new_slug = '%s-%s' % (slug, qs.first().id)
         return create_slug(instance, new_slug=new_slug)
     return slug

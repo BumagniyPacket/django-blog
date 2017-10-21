@@ -31,10 +31,10 @@ def post_detail(request, slug=None):
     if not request.user.is_superuser:
         instance.add_view()
     context = {
-        "instance": instance,
-        "form": CommentForm
+        'instance': instance,
+        'form': CommentForm
     }
-    return render(request, "posts/post_detail.html", context)
+    return render(request, 'posts/post_detail.html', context)
 
 
 def post_list(request):
@@ -99,7 +99,7 @@ def post_delete(request, slug):
 
 def add_comment(request, slug):
     instance = get_object_or_404(Post, slug=slug)
-    if request.method == "POST":
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
