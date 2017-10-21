@@ -21,7 +21,9 @@
     </div>
   </div>
   {% empty %}
-  <p>Посты не найдены...</p>
+  <div class="item empty-item-list">
+    <h2>По запросу "{{ request.GET.q }}" ничего не найдено</h2>
+  </div>
   {% endfor %}
 </div>
 

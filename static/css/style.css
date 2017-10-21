@@ -111,6 +111,12 @@ div.search-icon {
     padding-bottom: 20px;
 }
 
+.empty-item-list {
+    min-height: 50vh;
+    padding-top: 10vh;
+    text-align: center;
+}
+
 .date {
     position: absolute;
     bottom: 10px;
