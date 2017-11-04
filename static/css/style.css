@@ -59,6 +59,10 @@ img {
     z-index: 1000;
 }
 
+li > a > span {
+    color: white;
+}
+
 .navigation {
     display: inline-block;
     height: 25px;

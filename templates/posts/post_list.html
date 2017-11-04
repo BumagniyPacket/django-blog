@@ -27,20 +27,26 @@
   {% endfor %}
 </div>
 
+{% if paginator.num_pages > 1 %}
 <div class="pagination center">
   <span class="step-links">
-    {% if object_list.has_previous %}
-      <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Предыдущая</a>
+    {% if page_obj.has_previous %}
+      <a href="page={{ page_obj.previous_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&laquo;</a>
+    {% else %}
+      <span>&laquo;</span>
     {% endif %}
 
     <span class="current">
-      Страница {{ object_list.number }} из {{ object_list.paginator.num_pages }}.
+      Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
     </span>
 
-    {% if object_list.has_next %}
-      <a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Следующая</a>
+    {% if page_obj.has_next %}
+      <a href="page={{ page_obj.next_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&raquo;</a>
+    {% else %}
+      <span>&raquo;</span>
     {% endif %}
   </span>
 </div>
+{% endif %}
 
 {% endblock content %}

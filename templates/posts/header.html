@@ -7,12 +7,12 @@
       <div class="navigation">
         <ul>
           <li>
-            <a href="{% url 'posts:list' %}">Главная</a>
+            <a href="{% url 'posts:list' %}"><span>Главная</span></a>
           </li>
           <li>Абоут</li>
           {% if request.user.is_superuser %}
           <li>
-            <a href="{% url 'posts:create' %}">Создать пост</a>
+            <a href="{% url 'posts:create' %}"><span>Создать пост</span></a>
           </li>
           {% endif %}
         </ul>

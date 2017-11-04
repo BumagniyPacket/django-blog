@@ -5,7 +5,7 @@ from django.utils.text import slugify
 
 
 class PostManager(models.Manager):
-    def published(self, *args, **kwargs):
+    def published(self):
         return super().filter(draft=False)
 
 
@@ -16,18 +16,18 @@ class Post(models.Model):
 
         ordering = ['-timestamp', '-updated']
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
-    title = models.CharField(max_length=120)
-    image = models.URLField(blank=True)
-    description = models.TextField(max_length=400)
-    slug = models.SlugField(unique=True, blank=True)
-    content = models.TextField()
-    draft = models.BooleanField(default=False)
-    timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    views = models.IntegerField(default=0)
-
     objects = PostManager()
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, verbose_name='Пользователь')
+    title = models.CharField(max_length=120, verbose_name='Заголовок поста')
+    image = models.URLField(blank=True, verbose_name='Ссылка на изображение')
+    description = models.TextField(max_length=400, verbose_name='Описание поста')
+    slug = models.SlugField(unique=True, blank=True, verbose_name='Слаг')
+    content = models.TextField(verbose_name='Контент')
+    draft = models.BooleanField(default=False, verbose_name='В процессе написания')
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
+    views = models.IntegerField(default=0, verbose_name='Просмотров')
 
     def __str__(self):
         return self.title

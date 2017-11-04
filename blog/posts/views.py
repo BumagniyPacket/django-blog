@@ -1,104 +1,74 @@
-from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import DeleteView, DetailView, ListView
+from django.views.generic.edit import FormView, UpdateView
 
 from blog.comments.forms import CommentForm
-
 from .forms import PostForm
 from .models import Post
 
 
-def post_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    form = PostForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.save()
-        messages.success(request, 'Successfully created')
-        return redirect(instance.get_absolute_url())
-    context = {
-        'form': form,
-    }
-    return render(request, 'posts/post_form.html', context)
+class PostsList(ListView):
+    context_object_name = 'object_list'
+    model = Post
+    paginate_by = 10
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            qs = Post.objects.all()
+        else:
+            qs = Post.objects.published()
+
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query)
+            ).distinct()
+        return qs
 
 
-def post_detail(request, slug=None):
-    instance = get_object_or_404(Post, slug=slug)
-    if not request.user.is_superuser:
-        instance.add_view()
-        comments = instance.comments.approved()
-    else:
-        comments = instance.comments.all()
-    context = {
-        'instance': instance,
-        'form': CommentForm,
-        'comments': comments
-    }
-    return render(request, 'posts/post_detail.html', context)
+class PostDetail(DetailView):
+    model = Post
+    context_object_name = 'instance'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetail, self).get_context_data(**kwargs)
+
+        if not self.request.user.is_superuser:
+            self.object.add_view()
+            comments = self.object.comments.approved()
+        else:
+            comments = self.object.comments.all()
+        context['comments'] = comments
+        context['form'] = CommentForm()
+        return context
 
 
-def post_list(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        queryset_list = Post.objects.published()
-    else:
-        queryset_list = Post.objects.all()
+class PostCreate(LoginRequiredMixin, FormView):
+    form_class = PostForm
+    template_name = 'posts/post_form.html'
 
-    # search
-    query = request.GET.get('q')
-    if query:
-        queryset_list = queryset_list.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query)
-        ).distinct()
-
-    # pagination
-    paginator = Paginator(queryset_list, 5)
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        queryset = paginator.page(1)
-    except EmptyPage:
-        queryset = paginator.page(paginator.num_pages)
-
-    context = {
-        'object_list': queryset,
-        'title': 'List',
-        'page_request_var': page_request_var
-    }
-    return render(request, 'posts/post_list.html', context)
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.user = self.request.user
+        post.save()
+        return redirect(post.get_absolute_url())
 
 
-def post_update(request, slug):
-    print(slug)
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Post, slug=slug)
-    form = PostForm(request.POST or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        messages.success(request, 'Successfully updated', extra_tags='html_safe')
-        return redirect(instance.get_absolute_url())
-    context = {
-        'instance': instance,
-        'form': form
-    }
-    return render(request, 'posts/post_form.html', context)
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'posts/post_form.html'
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 
-def post_delete(request, slug):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Post, slug=slug)
-    instance.delete()
-    messages.success(request, 'Successfully deleted')
-    return redirect('posts:list')
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = '/'
 
 
 def add_comment(request, slug):
