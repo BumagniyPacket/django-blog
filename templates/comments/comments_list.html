@@ -1,7 +1,17 @@
-{% for comment in instance.get_comments %}
+{% for comment in comments %}
 
 <div class="comment">
   <p><b>{{ comment.author }}</b> написал {{ comment.timestamp|timesince }} назад</p>
+
+  {% if request.user.is_superuser %}
+  <p>
+    {% if not comment.approved %}
+    <span><a href="{{ comment.approve_link }}">Принять</a></span>
+    {% endif %}
+    <span><a href="{{ comment.delete_link }}">Удалить</a></span>
+  </p>
+  {% endif %}
+
   <hr>
   <p>{{ comment.text|linebreaks }}</p>
 </div>

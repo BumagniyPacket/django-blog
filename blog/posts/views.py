@@ -19,7 +19,7 @@ def post_create(request):
         instance.user = request.user
         instance.save()
         messages.success(request, 'Successfully created')
-        return HttpResponseRedirect(instance.get_absolute_url())
+        return redirect(instance.get_absolute_url())
     context = {
         'form': form,
     }
@@ -30,11 +30,15 @@ def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     if not request.user.is_superuser:
         instance.add_view()
+        comments = instance.comments.approved()
+    else:
+        comments = instance.comments.all()
     context = {
-        "instance": instance,
-        "form": CommentForm
+        'instance': instance,
+        'form': CommentForm,
+        'comments': comments
     }
-    return render(request, "posts/post_detail.html", context)
+    return render(request, 'posts/post_detail.html', context)
 
 
 def post_list(request):
@@ -80,7 +84,7 @@ def post_update(request, slug):
         instance = form.save(commit=False)
         instance.save()
         messages.success(request, 'Successfully updated', extra_tags='html_safe')
-        return HttpResponseRedirect(instance.get_absolute_url())
+        return redirect(instance.get_absolute_url())
     context = {
         'instance': instance,
         'form': form
@@ -99,10 +103,10 @@ def post_delete(request, slug):
 
 def add_comment(request, slug):
     instance = get_object_or_404(Post, slug=slug)
-    if request.method == "POST":
+    if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.post = instance
             comment.save()
-    return HttpResponseRedirect(instance.get_absolute_url())
+    return redirect(instance.get_absolute_url())

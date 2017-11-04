@@ -26,7 +26,7 @@ titleInput.keyup(function () {
 
 //change input height
 function h() {
-    $(this).css({'height':'auto','overflow-y':'hidden'}).height(this.scrollHeight);
+    $(this).css({"height":"auto","overflow-y":"hidden"}).height(this.scrollHeight);
 }
-$(document).on('input', 'textarea', h).trigger('input');
+$(document).on("input", "textarea", h).trigger("input");
 // end change input height
