@@ -27,6 +27,7 @@
   {% endfor %}
 </div>
 
+{% if paginator.num_pages > 1 %}
 <div class="pagination center">
   <span class="step-links">
     {% if page_obj.has_previous %}
@@ -46,5 +47,6 @@
     {% endif %}
   </span>
 </div>
+{% endif %}
 
 {% endblock content %}
