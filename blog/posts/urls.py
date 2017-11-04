@@ -1,16 +1,11 @@
 from django.conf.urls import url
 
-from .views import (
-    post_create,
-    post_delete,
-    post_detail,
-    post_list,
-    post_update,
-    add_comment,
-)
+from .views import PostsList, add_comment, post_create, post_delete, post_detail, post_update
 
 urlpatterns = [
-    url(r'^$', post_list, name='list'),
+    url(r'^$', PostsList.as_view(), name='list'),
+    url(r'^page=(?P<page>\d+)', PostsList.as_view()),
+
     url(r'^create', post_create, name='create'),
     url(r'^(?P<slug>[\w-]+)/$', post_detail, name='detail'),
     url(r'^(?P<slug>[\w-]+)/edit/$', post_update, name='edit'),

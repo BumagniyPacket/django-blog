@@ -16,6 +16,8 @@ class Post(models.Model):
 
         ordering = ['-timestamp', '-updated']
 
+    objects = PostManager()
+
     user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, verbose_name='Пользователь')
     title = models.CharField(max_length=120, verbose_name='Заголовок поста')
     image = models.URLField(blank=True, verbose_name='Ссылка на изображение')
@@ -26,8 +28,6 @@ class Post(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
     views = models.IntegerField(default=0, verbose_name='Просмотров')
-
-    objects = PostManager()
 
     def __str__(self):
         return self.title

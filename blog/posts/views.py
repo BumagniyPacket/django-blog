@@ -1,11 +1,10 @@
 from django.contrib import messages
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.http import HttpResponseRedirect, Http404
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.generic import ListView
 
 from blog.comments.forms import CommentForm
-
 from .forms import PostForm
 from .models import Post
 
@@ -41,37 +40,29 @@ def post_detail(request, slug=None):
     return render(request, 'posts/post_detail.html', context)
 
 
-def post_list(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        queryset_list = Post.objects.published()
-    else:
-        queryset_list = Post.objects.all()
-
-    # search
-    query = request.GET.get('q')
-    if query:
-        queryset_list = queryset_list.filter(
-            Q(title__icontains=query) |
-            Q(content__icontains=query)
-        ).distinct()
-
-    # pagination
-    paginator = Paginator(queryset_list, 5)
-    page_request_var = 'page'
-    page = request.GET.get(page_request_var)
-    try:
-        queryset = paginator.page(page)
-    except PageNotAnInteger:
-        queryset = paginator.page(1)
-    except EmptyPage:
-        queryset = paginator.page(paginator.num_pages)
+class PostsList(ListView):
+    context_object_name = 'object_list'
+    model = Post
+    paginate_by = 10
+    template_name = 'posts/post_list.html'
 
     context = {
-        'object_list': queryset,
-        'title': 'List',
-        'page_request_var': page_request_var
+        'title': 'List'
     }
-    return render(request, 'posts/post_list.html', context)
+
+    def get_queryset(self):
+        if self.request.user.is_staff or self.request.user.is_superuser:
+            qs = Post.objects.all()
+        else:
+            qs = Post.objects.published()
+
+        query = self.request.GET.get('q')
+        if query:
+            qs = qs.filter(
+                Q(title__icontains=query) |
+                Q(content__icontains=query)
+            ).distinct()
+        return qs
 
 
 def post_update(request, slug):
