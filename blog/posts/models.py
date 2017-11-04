@@ -6,7 +6,7 @@ from django.utils.text import slugify
 
 class PostManager(models.Manager):
     def published(self, *args, **kwargs):
-        return super(PostManager, self).filter(draft=False)
+        return super().filter(draft=False)
 
 
 class Post(models.Model):
@@ -36,9 +36,6 @@ class Post(models.Model):
         if not self.slug:
             self.slug = create_slug(self)
         super(Post, self).save(*args, **kwargs)
-
-    def get_comments(self):
-        return self.comments.all().order_by('-timestamp')
 
     def get_absolute_url(self):
         return reverse('posts:detail', kwargs={'slug': self.slug})
