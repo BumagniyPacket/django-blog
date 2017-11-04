@@ -21,6 +21,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'', include('blog.posts.urls', namespace='posts')),
+    url(r'^comments/', include('blog.comments.urls', namespace='comments')),
 ]
 
 if settings.DEBUG:
