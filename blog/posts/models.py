@@ -35,16 +35,16 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = create_slug(self)
-        super(Post, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('posts:detail', kwargs={'slug': self.slug})
 
     def get_delete_url(self):
-        return '%sdelete' % self.get_absolute_url()
+        return reverse('posts:delete', kwargs={'slug': self.slug})
 
     def get_edit_url(self):
-        return '%sedit' % self.get_absolute_url()
+        return reverse('posts:edit', kwargs={'slug': self.slug})
 
     def add_view(self):
         self.views += 1
