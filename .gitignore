@@ -1,7 +1,13 @@
-.venv/
+venv/
 .directory
 .idea
 *.sqlite3
 *migrations/
 
 *.pyc
+/db.sqlite
+/venv/
+/tests/geckodriver.log
+/.cache/
+/geckodriver.log
+maket

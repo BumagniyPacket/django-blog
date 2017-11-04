@@ -6,10 +6,15 @@
     <div class="container">
       <div class="navigation">
         <ul>
-          <a href="{% url 'posts:list' %}">
-            <li>Главная</li>
-          </a>
+          <li>
+            <a href="{% url 'posts:list' %}">Главная</a>
+          </li>
           <li>Абоут</li>
+          {% if request.user.is_superuser %}
+          <li>
+            <a href="{% url 'posts:create' %}">Создать пост</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
       <div class="search-wrapper">

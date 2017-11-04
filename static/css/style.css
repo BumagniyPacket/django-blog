@@ -10,7 +10,6 @@
 
 body {
     background-color: #cfd8dc;
-
     font-family: 'Open Sans', Helvetica, Arial;
     font-size: 0.8em;
     color: #212121;
@@ -110,6 +109,12 @@ div.search-icon {
 
 .item-list {
     padding-bottom: 20px;
+}
+
+.empty-item-list {
+    min-height: 50vh;
+    padding-top: 10vh;
+    text-align: center;
 }
 
 .date {
@@ -260,4 +265,28 @@ input:checked + label {
 .content-markdown > *,
 #preview-content > * {
     margin: 15px 0px;
+}
+
+/* Preloader */
+
+#page-preloader {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 100500;
+}
+
+#page-preloader .spinner {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    background: url('../pics/preloader.gif') no-repeat 50% 50%;
+    background-size: cover;
+    /* background: url('../favicon.ico') no-repeat 50% 50%; */
+    margin: -40px 0 0 -40px;
 }
