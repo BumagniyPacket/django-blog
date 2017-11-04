@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import DeleteView, DetailView, ListView
+from django.views.generic import DeleteView, DetailView, FormView, ListView
 
 from blog.comments.forms import CommentForm
 from .forms import PostForm
@@ -45,6 +45,17 @@ class PostDetail(DetailView):
         context['comments'] = comments
         context['form'] = CommentForm()
         return context
+
+
+class PostCreate(LoginRequiredMixin, FormView):
+    form_class = PostForm
+    template_name = 'posts/post_form.html'
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.user = self.request.user
+        post.save()
+        return redirect(post.get_absolute_url())
 
 
 def post_update(request, slug):
