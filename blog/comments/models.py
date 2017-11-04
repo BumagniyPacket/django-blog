@@ -19,11 +19,11 @@ class Comment(models.Model):
 
     objects = CommentManager()
 
-    post = models.ForeignKey(Post, related_name='comments')
-    author = models.CharField(max_length=50, default='anon')
-    timestamp = models.DateTimeField(auto_now_add=True)
-    text = models.TextField(max_length=1000, default=None)
-    approved = models.BooleanField(default=False)
+    post = models.ForeignKey(Post, related_name='comments', verbose_name='Пост')
+    author = models.CharField(max_length=50, default='anon', verbose_name='Автор')
+    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    text = models.TextField(max_length=1000, default=None, verbose_name='Текст комментария')
+    approved = models.BooleanField(default=False, verbose_name='Подтвержден')
 
     def approve(self):
         self.approved = True
