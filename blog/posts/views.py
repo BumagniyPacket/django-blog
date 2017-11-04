@@ -1,9 +1,8 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import DeleteView, DetailView, FormView, ListView
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic import DeleteView, DetailView, ListView
+from django.views.generic.edit import FormView, UpdateView
 
 from blog.comments.forms import CommentForm
 from .forms import PostForm
@@ -58,21 +57,13 @@ class PostCreate(LoginRequiredMixin, FormView):
         return redirect(post.get_absolute_url())
 
 
-def post_update(request, slug):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Post, slug=slug)
-    form = PostForm(request.POST or None, instance=instance)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.save()
-        messages.success(request, 'Successfully updated', extra_tags='html_safe')
-        return redirect(instance.get_absolute_url())
-    context = {
-        'instance': instance,
-        'form': form
-    }
-    return render(request, 'posts/post_form.html', context)
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    form_class = PostForm
+    model = Post
+    template_name = 'posts/post_form.html'
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 
 class PostDelete(LoginRequiredMixin, DeleteView):
