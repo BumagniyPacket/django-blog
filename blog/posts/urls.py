@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from .views import PostDetail, PostsList, add_comment, post_create, post_delete, post_update
+from .views import PostDelete, PostDetail, PostsList, add_comment, post_create, post_update
 
 urlpatterns = [
     url(r'^$', PostsList.as_view(), name='list'),
@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^create', post_create, name='create'),
     url(r'^(?P<slug>[\w-]+)/edit/$', post_update, name='edit'),
     url(r'^(?P<slug>[\w-]+)/add_comment/$', add_comment),
-    url(r'^(?P<slug>[\w-]+)/delete/$', post_delete, name='delete'),
+    url(r'^(?P<slug>[\w-]+)/delete/$', PostDelete.as_view(), name='delete'),
 ]

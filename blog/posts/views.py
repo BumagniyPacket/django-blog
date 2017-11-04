@@ -1,8 +1,11 @@
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.views.generic import DetailView, ListView
+from django.utils.decorators import method_decorator
+from django.views.generic import DeleteView, DetailView, FormView, ListView
 
 from blog.comments.forms import CommentForm
 from .forms import PostForm
@@ -13,7 +16,6 @@ class PostsList(ListView):
     context_object_name = 'object_list'
     model = Post
     paginate_by = 10
-    template_name = 'posts/post_list.html'
 
     def get_queryset(self):
         if self.request.user.is_staff or self.request.user.is_superuser:
@@ -33,7 +35,6 @@ class PostsList(ListView):
 class PostDetail(DetailView):
     model = Post
     context_object_name = 'instance'
-    template_name = 'posts/post_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(PostDetail, self).get_context_data(**kwargs)
@@ -45,6 +46,17 @@ class PostDetail(DetailView):
             comments = self.object.comments.all()
         context['comments'] = comments
         return context
+
+
+class PostCreate(FormView):
+    template_name = 'post_form.html'
+    form_class = PostForm
+
+    # success_url = object.get_absolute_url()
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        super().dispatch(request, *args, **kwargs)
 
 
 def post_create(request):
@@ -64,7 +76,6 @@ def post_create(request):
 
 
 def post_update(request, slug):
-    print(slug)
     if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
     instance = get_object_or_404(Post, slug=slug)
@@ -81,13 +92,9 @@ def post_update(request, slug):
     return render(request, 'posts/post_form.html', context)
 
 
-def post_delete(request, slug):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    instance = get_object_or_404(Post, slug=slug)
-    instance.delete()
-    messages.success(request, 'Successfully deleted')
-    return redirect('posts:list')
+class PostDelete(LoginRequiredMixin, DeleteView):
+    model = Post
+    success_url = '/'
 
 
 def add_comment(request, slug):
