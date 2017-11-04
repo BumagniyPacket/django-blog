@@ -1,11 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.decorators import method_decorator
-from django.views.generic import DeleteView, DetailView, FormView, ListView
+from django.views.generic import DeleteView, DetailView, ListView
 
 from blog.comments.forms import CommentForm
 from .forms import PostForm
@@ -45,34 +43,8 @@ class PostDetail(DetailView):
         else:
             comments = self.object.comments.all()
         context['comments'] = comments
+        context['form'] = CommentForm()
         return context
-
-
-class PostCreate(FormView):
-    template_name = 'post_form.html'
-    form_class = PostForm
-
-    # success_url = object.get_absolute_url()
-
-    @method_decorator(login_required)
-    def dispatch(self, request, *args, **kwargs):
-        super().dispatch(request, *args, **kwargs)
-
-
-def post_create(request):
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
-    form = PostForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        instance.user = request.user
-        instance.save()
-        messages.success(request, 'Successfully created')
-        return redirect(instance.get_absolute_url())
-    context = {
-        'form': form,
-    }
-    return render(request, 'posts/post_form.html', context)
 
 
 def post_update(request, slug):
