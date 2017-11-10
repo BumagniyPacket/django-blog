@@ -1,4 +1,5 @@
 Django==1.10.5
+djangorestframework==3.7.1
 django-markdown==0.8.4
 django-pagedown==0.1.1
 Markdown==2.6.8
