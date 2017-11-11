@@ -1,7 +1,10 @@
+from unittest.mock import patch
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 
+from blog.comments.models import Comment
 from blog.posts.models import Post
 
 
@@ -62,8 +65,66 @@ class PostListViewTest(TestCase):
         self.assertFalse(resp.context['is_paginated'])
         self.assertEquals(len(resp.context['object_list']), 1)
 
-    # test draft position
-    def test(self):
+    def test_list_with_draft_posts_authorized_user(self):
         self.client.login(username='testuser', password='12345')
         resp = self.client.get(reverse('posts:list') + '?page=2')
         self.assertEquals(len(resp.context['object_list']), 5)
+
+
+class PostDetailViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(username='testuser', password='12345', is_superuser=True)
+        test_user.save()
+
+        Post.objects.create(title='Test title', description='desc', content='content')
+        Post.objects.create(title='Test title', description='desc', content='content', draft=True)
+
+        Comment.objects.create(post_id=1, text='test')
+        Comment.objects.create(post_id=1, text='test')
+        Comment.objects.create(post_id=1, text='test', approved=True)
+
+    def test_view_post_not_in_draft_unauthorised_user(self):
+        post = Post.objects.get(pk=1)
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_view_post_in_draft_unauthorised_user(self):
+        post = Post.objects.get(pk=2)
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 404)
+
+    def test_view_post_not_in_draft_authorised_user(self):
+        post = Post.objects.get(pk=1)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_view_post_in_draft_authorised_user(self):
+        post = Post.objects.get(pk=2)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        post = Post.objects.get(pk=1)
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertTemplateUsed(resp, 'posts/post_detail.html')
+        self.assertTemplateUsed(resp, 'comments/comments_form.html')
+
+    def test_view_comments_is_one_unauthorized_user(self):
+        post = Post.objects.get(pk=1)
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEquals(len(resp.context['comments']), 1)
+
+    def test_view_comments_is_three_authorized_user(self):
+        post = Post.objects.get(pk=1)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEquals(len(resp.context['comments']), 3)
+
+    def test_view_add_view_method_call(self):
+        post = Post.objects.get(pk=1)
+        with patch('blog.posts.models.Post.add_view') as add_view:
+            self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
+        self.assertEquals(add_view.call_count, 1)
