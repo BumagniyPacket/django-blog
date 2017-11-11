@@ -24,7 +24,8 @@ class PostsList(ListView):
         if query:
             qs = qs.filter(
                 Q(title__icontains=query) |
-                Q(content__icontains=query)
+                Q(content__icontains=query) |
+                Q(description__icontains=query)
             ).distinct()
         return qs
 
