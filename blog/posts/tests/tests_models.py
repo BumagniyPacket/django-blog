@@ -73,6 +73,26 @@ class PostTestCase(TestCase):
         self.assertEquals(max_length, 400)
 
     # test post methods
+    def test_post_str_method(self):
+        post = Post.objects.get(pk=1)
+        expected = 'Test title 4 testing'
+        self.assertEquals(str(post), expected)
+
+    def test_post_get_absolute_url_method(self):
+        post = Post.objects.get(pk=1)
+        expected = '/test-title-4-testing'
+        self.assertEquals(post.get_absolute_url(), expected)
+
+    def test_post_get_delete_url_method(self):
+        post = Post.objects.get(pk=1)
+        expected = '/test-title-4-testing/delete'
+        self.assertEquals(post.get_delete_url(), expected)
+
+    def test_post_get_edit_url_method(self):
+        post = Post.objects.get(pk=1)
+        expected = '/test-title-4-testing/edit'
+        self.assertEquals(post.get_edit_url(), expected)
+
     def test_post_add_view_method(self):
         post = Post.objects.get(pk=1)
         post.add_view()
