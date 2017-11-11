@@ -128,3 +128,70 @@ class PostDetailViewTest(TestCase):
         with patch('blog.posts.models.Post.add_view') as add_view:
             self.client.get(reverse('posts:detail', kwargs={'slug': post.slug}))
         self.assertEquals(add_view.call_count, 1)
+
+
+class PostCreateViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user = User.objects.create_user(username='testuser', password='12345', is_superuser=True)
+        test_user.save()
+
+    def test_create_post_unauthorised_user(self):
+        resp = self.client.get(reverse('posts:create'))
+        self.assertEqual(resp.status_code, 302)
+
+    def test_create_post_authorised_user(self):
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:create'))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_view_uses_correct_template(self):
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:create'))
+        self.assertTemplateUsed(resp, 'posts/post_form.html')
+
+
+class PostEditViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Post.objects.create(title='Test title', description='desc', content='content')
+
+        test_user = User.objects.create_user(username='testuser', password='12345', is_superuser=True)
+        test_user.save()
+
+    def test_edit_post_unauthorised_user(self):
+        post = Post.objects.get(pk=1)
+        resp = self.client.get(reverse('posts:edit', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 302)
+
+    def test_edit_post_authorised_user(self):
+        post = Post.objects.get(pk=1)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:edit', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 200)
+
+    def test_edit_uses_correct_template(self):
+        post = Post.objects.get(pk=1)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:edit', kwargs={'slug': post.slug}))
+        self.assertTemplateUsed(resp, 'posts/post_form.html')
+
+
+class PostDeleteViewTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        Post.objects.create(title='Test title', description='desc', content='content')
+
+        test_user = User.objects.create_user(username='testuser', password='12345', is_superuser=True)
+        test_user.save()
+
+    def test_delete_post_unauthorised_user(self):
+        post = Post.objects.get(pk=1)
+        resp = self.client.get(reverse('posts:delete', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 302)
+
+    def test_delete_post_authorised_user(self):
+        post = Post.objects.get(pk=1)
+        self.client.login(username='testuser', password='12345')
+        resp = self.client.get(reverse('posts:delete', kwargs={'slug': post.slug}))
+        self.assertEqual(resp.status_code, 200)
