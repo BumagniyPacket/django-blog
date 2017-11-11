@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DeleteView, DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
@@ -35,8 +36,10 @@ class PostDetail(DetailView):
     context_object_name = 'instance'
 
     def get_context_data(self, **kwargs):
-        context = super(PostDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
+        if self.object.draft and not self.request.user.is_superuser:
+            raise Http404
         if not self.request.user.is_superuser:
             self.object.add_view()
             comments = self.object.comments.approved()
