@@ -75,4 +75,12 @@ class CommentTestCase(TestCase):
         comment.approve()
         self.assertTrue(comment.approved)
 
+    def test_comment_manager_approved_method_with_zero_approved(self):
+        comments = Comment.objects.approved()
+        self.assertEquals(len(comments), 0)
 
+    def test_comment_manager_approved_method_with_one_approved(self):
+        comment = Comment.objects.get(pk=1)
+        comment.approve()
+        comments = Comment.objects.approved()
+        self.assertEquals(len(comments), 1)
