@@ -46,7 +46,7 @@ class PostDetail(DetailView):
         else:
             comments = self.object.comments.all()
         context['comments'] = comments
-        context['form'] = CommentForm()
+        context['form'] = CommentForm(initial={'post': self.object.id})
         return context
 
 
