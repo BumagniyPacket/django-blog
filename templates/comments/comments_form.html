@@ -1,5 +1,5 @@
 <div id="comment_form">
-  <form action="add_comment/" method="post">
+  <form action="{{ instance.slug }}/add_comment/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Добавить комментарий" name="" id="">

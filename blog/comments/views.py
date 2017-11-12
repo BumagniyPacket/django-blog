@@ -1,18 +1,19 @@
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import DeleteView, UpdateView
 
 from blog.comments.models import Comment
 
 
-@login_required
-def comment_approve(request, pk):
-    instance = Comment.objects.get(pk=pk)
-    instance.approve()
-    return redirect(request.META.get('HTTP_REFERER'))
+class CommentApproveView(LoginRequiredMixin, UpdateView):
+    model = Comment
+
+    def get_success_url(self):
+        self.object.approve()
+        return self.object.post.get_absolute_url()
 
 
-@login_required
-def comment_delete(request, pk):
-    instance = Comment.objects.get(pk=pk)
-    instance.delete()
-    return redirect(request.META.get('HTTP_REFERER'))
+class CommentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Comment
+
+    def get_success_url(self):
+        return self.object.post.get_absolute_url()
