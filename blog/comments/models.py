@@ -5,7 +5,9 @@ from blog.posts.models import Post
 
 
 class CommentManager(models.Manager):
-    def approved(self):
+    def approved(self, post_id=None):
+        if post_id:
+            return super().filter(approved=True, post_id=post_id).order_by('-timestamp')
         return super().filter(approved=True).order_by('-timestamp')
 
     def all(self):
