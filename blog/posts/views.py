@@ -1,11 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import Http404
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.views.generic import DeleteView, DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 
-from blog.comments.forms import CommentForm
 from .forms import PostForm
 from .models import Post
 
@@ -42,11 +41,7 @@ class PostDetail(DetailView):
             raise Http404
         if not self.request.user.is_superuser:
             self.object.add_view()
-            comments = self.object.comments.approved()
-        else:
-            comments = self.object.comments.all()
-        context['comments'] = comments
-        context['form'] = CommentForm(initial={'post': self.object.id})
+
         return context
 
 
@@ -73,14 +68,3 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = '/'
-
-
-def add_comment(request, slug):
-    instance = get_object_or_404(Post, slug=slug)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = instance
-            comment.save()
-    return redirect(instance.get_absolute_url())
