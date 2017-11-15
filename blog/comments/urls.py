@@ -1,8 +1,9 @@
 from django.conf.urls import url
 
-from .views import comment_approve, comment_delete
+from .views import CommentAddView, CommentApproveView, CommentDeleteView
 
 urlpatterns = [
-    url(r'^(?P<pk>\d+)/delete$', comment_delete, name='delete'),
-    url(r'^(?P<pk>\d+)/approve$', comment_approve, name='approve'),
+    url(r'^(?P<pk>\d+)/delete$', CommentDeleteView.as_view(), name='delete'),
+    url(r'^(?P<pk>\d+)/approve$', CommentApproveView.as_view(), name='approve'),
+    url(r'^add$', CommentAddView.as_view(), name='add'),
 ]

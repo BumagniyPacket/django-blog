@@ -5,7 +5,9 @@ from blog.posts.models import Post
 
 
 class CommentManager(models.Manager):
-    def approved(self):
+    def approved(self, post_id=None):
+        if post_id:
+            return super().filter(approved=True, post_id=post_id).order_by('-timestamp')
         return super().filter(approved=True).order_by('-timestamp')
 
     def all(self):
@@ -19,7 +21,7 @@ class Comment(models.Model):
 
     objects = CommentManager()
 
-    post = models.ForeignKey(Post, related_name='comments', verbose_name='Пост')
+    post = models.ForeignKey(Post, related_name='comments', verbose_name='Пост', on_delete=models.CASCADE)
     author = models.CharField(max_length=50, default='anon', verbose_name='Автор')
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     text = models.TextField(max_length=1000, default=None, verbose_name='Текст комментария')
@@ -36,4 +38,4 @@ class Comment(models.Model):
         return reverse('comments:delete', kwargs={'pk': self.pk})
 
     def __str__(self):
-        return self.text
+        return f'{self.author} - {self.text} | approved: {self.approved}'

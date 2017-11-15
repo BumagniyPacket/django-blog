@@ -3,10 +3,11 @@
 {% block head_title %}{{ instance.title }} | {{ block.super }} {% endblock head_title %}
 
 {% block content %}
+{% load comments %}
 
 <div class="item">
   <h1>{{ instance.title }}
-    {% if user.is_authenticated %}
+    {% if user.is_superuser %}
     | <a href="{{ instance.get_edit_url }}">Редактировать</a>
     {% endif %}
   </h1>
@@ -31,7 +32,7 @@
   <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
   {% endif %}
 
-  {% include "comments/comments_wrap.html" %}
+  {% comments instance.pk user.is_superuser %}
 
 </div>
 

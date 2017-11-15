@@ -1,10 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import DeleteView, DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 
-from blog.comments.forms import CommentForm
 from .forms import PostForm
 from .models import Post
 
@@ -24,7 +24,8 @@ class PostsList(ListView):
         if query:
             qs = qs.filter(
                 Q(title__icontains=query) |
-                Q(content__icontains=query)
+                Q(content__icontains=query) |
+                Q(description__icontains=query)
             ).distinct()
         return qs
 
@@ -34,15 +35,13 @@ class PostDetail(DetailView):
     context_object_name = 'instance'
 
     def get_context_data(self, **kwargs):
-        context = super(PostDetail, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
 
+        if self.object.draft and not self.request.user.is_superuser:
+            raise Http404
         if not self.request.user.is_superuser:
             self.object.add_view()
-            comments = self.object.comments.approved()
-        else:
-            comments = self.object.comments.all()
-        context['comments'] = comments
-        context['form'] = CommentForm()
+
         return context
 
 
@@ -69,14 +68,3 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = '/'
-
-
-def add_comment(request, slug):
-    instance = get_object_or_404(Post, slug=slug)
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = instance
-            comment.save()
-    return redirect(instance.get_absolute_url())

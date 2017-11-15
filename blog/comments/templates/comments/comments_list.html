@@ -3,7 +3,7 @@
 <div class="comment">
   <p><b>{{ comment.author }}</b> написал {{ comment.timestamp|timesince }} назад</p>
 
-  {% if request.user.is_superuser %}
+  {% if edit_comment %}
   <p>
     {% if not comment.approved %}
     <span><a href="{{ comment.approve_link }}">Принять</a></span>

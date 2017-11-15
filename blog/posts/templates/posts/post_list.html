@@ -31,9 +31,9 @@
 <div class="pagination center">
   <span class="step-links">
     {% if page_obj.has_previous %}
-      <a href="page={{ page_obj.previous_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&laquo;</a>
+      <a href="page={{ page_obj.previous_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&lsaquo;-</a>
     {% else %}
-      <span>&laquo;</span>
+      <span>&lsaquo;-</span>
     {% endif %}
 
     <span class="current">
@@ -41,9 +41,9 @@
     </span>
 
     {% if page_obj.has_next %}
-      <a href="page={{ page_obj.next_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&raquo;</a>
+      <a href="page={{ page_obj.next_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">-&rsaquo;</a>
     {% else %}
-      <span>&raquo;</span>
+      <span>-&rsaquo;</span>
     {% endif %}
   </span>
 </div>
