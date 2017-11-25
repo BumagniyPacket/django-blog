@@ -1,13 +1,13 @@
 from django.db import models
 from django.urls import reverse
 
-from blog.posts.models import Post
+from blog.articles.models import Article
 
 
 class CommentManager(models.Manager):
-    def approved(self, post_id=None):
-        if post_id:
-            return super().filter(approved=True, post_id=post_id).order_by('-timestamp')
+    def approved(self, article_id=None):
+        if article_id:
+            return super().filter(approved=True, article_id=article_id).order_by('-timestamp')
         return super().filter(approved=True).order_by('-timestamp')
 
     def all(self):
@@ -21,7 +21,7 @@ class Comment(models.Model):
 
     objects = CommentManager()
 
-    post = models.ForeignKey(Post, related_name='comments', verbose_name='Пост', on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, related_name='comments', verbose_name='Статья', on_delete=models.CASCADE)
     author = models.CharField(max_length=50, default='anon', verbose_name='Автор')
     timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
     text = models.TextField(max_length=1000, default=None, verbose_name='Текст комментария')

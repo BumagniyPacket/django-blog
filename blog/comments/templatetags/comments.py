@@ -7,14 +7,14 @@ register = template.Library()
 
 
 @register.inclusion_tag(filename='comments/comments_wrap.html')
-def comments(post_id, is_superuser):
+def comments(article_id, is_superuser):
     if is_superuser:
-        comments_list = Comment.objects.filter(post_id=post_id)
+        comments_list = Comment.objects.filter(article_id=article_id)
     else:
-        comments_list = Comment.objects.approved(post_id=post_id)
+        comments_list = Comment.objects.approved(article_id=article_id)
     comments_list = comments_list.order_by('-timestamp')
 
-    form = CommentForm(initial={'post': post_id})
+    form = CommentForm(initial={'article': article_id})
     context = {
         'comments': comments_list,
         'form': form,

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post
+from .models import Article
 
 
 class PostModelAdmin(admin.ModelAdmin):
@@ -9,7 +9,7 @@ class PostModelAdmin(admin.ModelAdmin):
     search_fields = ['title', 'content']
 
     class Meta:
-        model = Post
+        model = Article
 
 
-admin.site.register(Post, PostModelAdmin)
+admin.site.register(Article, PostModelAdmin)

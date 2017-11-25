@@ -1,22 +1,22 @@
 from django.test import TestCase
 
 from blog.comments.models import Comment
-from blog.posts.models import Post
+from blog.articles.models import Article
 
 
 class CommentTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
-        Post.objects.create(title='Test title 4 testing',
-                            description='Some description',
-                            content='Moar content')
-        Comment.objects.create(post_id=1, author='Anon', text='lorem ipsum')
+        Article.objects.create(title='Test title 4 testing',
+                               description='Some description',
+                               content='Moar content')
+        Comment.objects.create(article_id=1, author='Anon', text='lorem ipsum')
 
     # test verbose name
-    def test_comment_post_verbose_name(self):
+    def test_comment_article_verbose_name(self):
         comment = Comment.objects.get(pk=1)
-        field_label = comment._meta.get_field('post').verbose_name
-        self.assertEquals(field_label, 'Пост')
+        field_label = comment._meta.get_field('article').verbose_name
+        self.assertEquals(field_label, 'Статья')
 
     def test_comment_author_verbose_name(self):
         comment = Comment.objects.get(pk=1)

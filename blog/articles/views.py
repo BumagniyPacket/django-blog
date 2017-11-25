@@ -5,20 +5,20 @@ from django.shortcuts import redirect
 from django.views.generic import DeleteView, DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 
-from .forms import PostForm
-from .models import Post
+from .forms import ArticleForm
+from .models import Article
 
 
-class PostsList(ListView):
+class ArticlesListView(ListView):
     context_object_name = 'object_list'
-    model = Post
+    model = Article
     paginate_by = 10
 
     def get_queryset(self):
         if self.request.user.is_staff or self.request.user.is_superuser:
-            qs = Post.objects.all()
+            qs = Article.objects.all()
         else:
-            qs = Post.objects.published()
+            qs = Article.objects.published()
 
         query = self.request.GET.get('q')
         if query:
@@ -30,8 +30,8 @@ class PostsList(ListView):
         return qs
 
 
-class PostDetail(DetailView):
-    model = Post
+class ArticleDetailView(DetailView):
+    model = Article
     context_object_name = 'instance'
 
     def get_context_data(self, **kwargs):
@@ -45,9 +45,9 @@ class PostDetail(DetailView):
         return context
 
 
-class PostCreate(LoginRequiredMixin, FormView):
-    form_class = PostForm
-    template_name = 'posts/post_form.html'
+class ArticleCreateView(LoginRequiredMixin, FormView):
+    form_class = ArticleForm
+    template_name = 'articles/article_form.html'
 
     def form_valid(self, form):
         post = form.save(commit=False)
@@ -56,15 +56,15 @@ class PostCreate(LoginRequiredMixin, FormView):
         return redirect(post.get_absolute_url())
 
 
-class PostUpdate(LoginRequiredMixin, UpdateView):
-    form_class = PostForm
-    model = Post
-    template_name = 'posts/post_form.html'
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = ArticleForm
+    model = Article
+    template_name = 'articles/article_form.html'
 
     def get_success_url(self):
         return self.object.get_absolute_url()
 
 
-class PostDelete(LoginRequiredMixin, DeleteView):
-    model = Post
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+    model = Article
     success_url = '/'
