@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'pagedown',
     'markdown_deux',
-    'blog.posts',
+    'blog.articles',
     'blog.comments',
     'blog.api'
 ]

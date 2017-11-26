@@ -7,18 +7,18 @@
       <div class="navigation">
         <ul>
           <li>
-            <a href="{% url 'posts:list' %}"><span>Главная</span></a>
+            <a href="{% url 'articles:list' %}"><span>Главная</span></a>
           </li>
           <li>Абоут</li>
           {% if request.user.is_superuser %}
           <li>
-            <a href="{% url 'posts:create' %}"><span>Создать пост</span></a>
+            <a href="{% url 'articles:create' %}"><span>Создать пост</span></a>
           </li>
           {% endif %}
         </ul>
       </div>
       <div class="search-wrapper">
-        <form class="search-form" action="{% url 'posts:list' %}" method="get">
+        <form class="search-form" action="{% url 'articles:list' %}" method="get">
           <input type="text" name="q" id="search" class="search-field" placeholder="Введите слова для поиска"
                  value="{{ request.GET.q }}">
         </form>
