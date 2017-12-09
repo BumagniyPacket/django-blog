@@ -12,15 +12,14 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 
-try:
-    from blog.local_settings import *
-except ImportError:
-    pass
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.environ.get('SECRET_KEY', 'lorem-ipsum-dolor-sit-amet')
+
+DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = []
+
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Application definition
 
@@ -112,3 +111,8 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static_cdn')
+
+try:
+    from blog.local_settings import *
+except ImportError:
+    pass
