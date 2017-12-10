@@ -11,7 +11,9 @@
       <a href="{{ obj.get_absolute_url }}">{{ obj.title|upper }}</a>
     </h1>
     <hr>
+    {% if obj.image %}
     <img src="{{ obj.image }}" alt="">
+    {% endif %}
     <p class="description">{{ obj.description }}
       <a href="{{ obj.get_absolute_url }}">Читать дальше</a>
     </p>
