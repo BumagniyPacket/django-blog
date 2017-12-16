@@ -1,6 +1,6 @@
 FROM python:3
-RUN mkdir blog
-WORKDIR /blog
-ADD requirements.txt /blog/
+RUN mkdir blog-project
+WORKDIR /blog-project
+ADD requirements.txt /blog-project/
 RUN pip install -r requirements.txt
-ADD . /blog/
+ADD . /blog-project/
