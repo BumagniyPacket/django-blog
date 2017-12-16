@@ -17,7 +17,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'lorem-ipsum-dolor-sit-amet')
 
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -49,6 +49,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blog.urls'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_NAME', 'blog_db'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'password'),
+        'HOST': os.environ.get('DB_HOST', '127.0.0.1'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
+    }
+}
 
 TEMPLATES = [
     {
