@@ -30,12 +30,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'rest_framework',
     'pagedown',
     'markdown_deux',
     'blog.articles',
     'blog.comments',
-    'blog.api'
+    'blog.api',
+    'disqus'
 ]
 
 MIDDLEWARE = [
@@ -111,6 +113,11 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# DISQUS
+DISQUS_API_KEY = 'AWpbo2PXdK7mmfZs5NJaUZoJJb9D9qGOXUDPn9fmANLOXluMkVfUAhgGGlV0ywGe'
+DISQUS_WEBSITE_SHORTNAME = 'foobar'
+SITE_ID = 1
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
