@@ -7,3 +7,6 @@
 *local_settings.py
 .DS_Store
 /.venv/
+/web/static_cdn/
+/postgres/backups/
+/postgres/data/
