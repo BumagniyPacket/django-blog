@@ -141,6 +141,8 @@ CACHES = {
     }
 }
 
+CACHE_TTL = 60 * 60 * 24 * 7  # 1 week
+
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
 
