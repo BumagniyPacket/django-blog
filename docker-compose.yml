@@ -1,28 +1,54 @@
-version: '3'
+version: '2'
 
 services:
+
   web:
-    env_file:
-      - .env
-    build: .
-    container_name: 'django-blog'
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
+    restart: always
+    build: ./web/
+    container_name: web
+    expose:
+      - "8000"
+    links:
+      - postgres:postgres
+      - redis:redis
+    env_file: env
     volumes:
-      - .:/blog-project
-    ports:
-      - "80:8000"
-    depends_on:
-      - db
+      - ./web:/data/web
+    command: >
+      /bin/sh -c "./manage.py makemigrations articles &&
+      ./manage.py migrate &&
+      echo yes | ./manage.py collectstatic &&
+      echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')\" | ./manage.py shell &&
+      gunicorn blog.wsgi:application -w 2 -b :8000"
 
-  db:
-    env_file:
-      - .env
-    container_name: 'postgres'
-    image: 'postgres:9.5.3'
+  nginx:
+    restart: always
+    build: ./nginx/
+    container_name: nginx
     ports:
-      - '127.0.0.1:5432:5432'
+      - "80:80"
+    volumes_from:
+      - web
+    links:
+      - web:web
+
+  postgres:
+    restart: always
+    image: postgres:latest
+    container_name: postgres
+    # build: ./postgres/
     volumes:
-      - 'pgdata:/var/lib/postgresql/data/'
+      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/backups:/backup
+    env_file:
+      - env
+    ports:
+      - "5432"
 
-volumes:
-  pgdata:
+  redis:
+    restart: always
+    image: redis:latest
+    container_name: redis
+    expose:
+      - "6379"

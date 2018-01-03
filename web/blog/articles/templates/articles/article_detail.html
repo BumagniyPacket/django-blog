@@ -32,7 +32,8 @@
   <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
   {% endif %}
 
-  {% comments instance.pk user.is_superuser %}
+  {% load disqus_tags %}
+  {% disqus_show_comments %}
 
 </div>
 
