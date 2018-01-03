@@ -1,4 +1,4 @@
-FROM python:slim
+FROM python:3.6-slim
 
 # Initialize
 RUN mkdir -p /data/web
