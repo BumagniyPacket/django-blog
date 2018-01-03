@@ -1,7 +1,8 @@
-.venv/
 .git/
 .DS_Store
 .gitignore
 Dockerfile
 README.md
 LICENSE
+/web/blog/local_settings.py
+/.venv/
