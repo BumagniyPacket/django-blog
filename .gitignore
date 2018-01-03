@@ -1,9 +1,9 @@
-.venv/
 */.directory
-.idea
-*.sqlite3
-*.sqlite
+/.idea/
+/*.sqlite3
+/*.sqlite
 *migrations/
 *.pyc
 *local_settings.py
 .DS_Store
+/.venv/
