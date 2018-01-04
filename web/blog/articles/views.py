@@ -5,11 +5,12 @@ from django.shortcuts import redirect
 from django.views.generic import DeleteView, DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 
+from blog.utils.mixins import CacheMixin
 from .forms import ArticleForm
 from .models import Article
 
 
-class ArticlesListView(ListView):
+class ArticlesListView(CacheMixin, ListView):
     context_object_name = 'object_list'
     model = Article
     paginate_by = 10
@@ -30,7 +31,7 @@ class ArticlesListView(ListView):
         return qs
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(CacheMixin, DetailView):
     model = Article
     context_object_name = 'instance'
 
