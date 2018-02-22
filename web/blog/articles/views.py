@@ -10,7 +10,7 @@ from .forms import ArticleForm
 from .models import Article
 
 
-class ArticlesListView(CacheMixin, ListView):
+class ArticlesListView(ListView):
     context_object_name = 'object_list'
     model = Article
     paginate_by = 10
@@ -31,7 +31,7 @@ class ArticlesListView(CacheMixin, ListView):
         return qs
 
 
-class ArticleDetailView(CacheMixin, DetailView):
+class ArticleDetailView(DetailView):
     model = Article
     context_object_name = 'instance'
 
