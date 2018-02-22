@@ -106,22 +106,22 @@ class ArticleDetailViewTest(TestCase):
         resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
         self.assertEqual(resp.status_code, 200)
 
-    def test_view_uses_correct_template(self):
-        article = Article.objects.get(pk=1)
-        resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
-        self.assertTemplateUsed(resp, 'articles/article_detail.html')
-        self.assertTemplateUsed(resp, 'comments/comments_form.html')
-
-    def test_view_comments_is_one_unauthorized_user(self):
-        article = Article.objects.get(pk=1)
-        resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
-        self.assertEquals(len(resp.context['comments']), 1)
-
-    def test_view_comments_is_three_authorized_user(self):
-        article = Article.objects.get(pk=1)
-        self.client.login(username='testuser', password='12345')
-        resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
-        self.assertEquals(len(resp.context['comments']), 3)
+    # def test_view_uses_correct_template(self):
+    #     article = Article.objects.get(pk=1)
+    #     resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
+    #     self.assertTemplateUsed(resp, 'articles/article_detail.html')
+    #     self.assertTemplateUsed(resp, 'comments/comments_form.html')
+    #
+    # def test_view_comments_is_one_unauthorized_user(self):
+    #     article = Article.objects.get(pk=1)
+    #     resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
+    #     self.assertEquals(len(resp.context['comments']), 1)
+    #
+    # def test_view_comments_is_three_authorized_user(self):
+    #     article = Article.objects.get(pk=1)
+    #     self.client.login(username='testuser', password='12345')
+    #     resp = self.client.get(reverse('articles:detail', kwargs={'slug': article.slug}))
+    #     self.assertEquals(len(resp.context['comments']), 3)
 
     def test_view_add_view_method_call(self):
         article = Article.objects.get(pk=1)
