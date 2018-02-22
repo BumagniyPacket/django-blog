@@ -31,12 +31,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'rest_framework',
     'pagedown',
     'markdown_deux',
     'blog.articles',
     'blog.comments',
-    'blog.api',
     'disqus'
 ]
 
