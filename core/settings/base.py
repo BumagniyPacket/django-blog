@@ -58,7 +58,6 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     'apps.articles',
-    'apps.comments',
 ]
 
 THIRD_PARTY_APPS = [
