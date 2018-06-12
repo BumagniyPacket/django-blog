@@ -4,9 +4,10 @@ from .models import Article
 
 
 class PostModelAdmin(admin.ModelAdmin):
-    list_display = ['title', 'timestamp', 'updated']
-    list_filter = ['timestamp']
-    search_fields = ['title', 'content']
+    list_display = ('title', 'timestamp', 'updated')
+    list_filter = ('timestamp',)
+    search_fields = ('title', 'content')
+    fields = ('title', 'image', 'description', 'content', 'draft')
 
     class Meta:
         model = Article
