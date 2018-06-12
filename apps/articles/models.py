@@ -64,14 +64,9 @@ class Article(GenerateSlugMixin, models.Model):
     def __str__(self):
         return self.title
 
+    @property
     def get_absolute_url(self):
-        return reverse('articles:detail', kwargs={'slug': self.slug})
-
-    def get_delete_url(self):
-        return reverse('articles:delete', kwargs={'slug': self.slug})
-
-    def get_edit_url(self):
-        return reverse('articles:edit', kwargs={'slug': self.slug})
+        return reverse('v1:article-detail', kwargs={'pk': self.pk})
 
     def add_view(self):
         self.views += 1
