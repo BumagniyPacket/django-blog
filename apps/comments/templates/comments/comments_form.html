@@ -1,0 +1,7 @@
+<div id="comment_form">
+  <form action="{% url 'comments:add' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Добавить комментарий" name="" id="">
+  </form>
+</div>

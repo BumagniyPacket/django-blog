@@ -1,0 +1,21 @@
+{% for comment in comments %}
+
+<div class="comment">
+  <p><b>{{ comment.author }}</b> написал {{ comment.timestamp|timesince }} назад</p>
+
+  {% if edit_comment %}
+  <p>
+    {% if not comment.approved %}
+    <span><a href="{{ comment.approve_link }}">Принять</a></span>
+    {% endif %}
+    <span><a href="{{ comment.delete_link }}">Удалить</a></span>
+  </p>
+  {% endif %}
+
+  <hr>
+  <p>{{ comment.text|linebreaks }}</p>
+</div>
+
+{% empty %}
+<p>Комментариев пока нет</p>
+{% endfor %}
