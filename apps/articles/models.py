@@ -1,9 +1,10 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils.text import slugify
 
 from filer.fields.image import FilerImageField
+
+from apps.utils.mixins import GenerateSlugMixin
 
 
 class ArticleManager(models.Manager):
@@ -11,7 +12,7 @@ class ArticleManager(models.Manager):
         return super().filter(draft=False)
 
 
-class Article(models.Model):
+class Article(GenerateSlugMixin, models.Model):
     class Meta:
         verbose_name = 'Блог - пост'
         verbose_name_plural = 'Блог - посты'
@@ -40,7 +41,7 @@ class Article(models.Model):
     slug = models.SlugField(
         unique=True,
         blank=True,
-        verbose_name='Слаг'
+        verbose_name='Слаг',
     )
     content = models.TextField(verbose_name='Контент')
     draft = models.BooleanField(
@@ -63,11 +64,6 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = create_slug(self)
-        super().save(*args, **kwargs)
-
     def get_absolute_url(self):
         return reverse('articles:detail', kwargs={'slug': self.slug})
 
@@ -84,15 +80,3 @@ class Article(models.Model):
     def get_views(self):
         views = self.views
         return views
-
-
-def create_slug(instance, new_slug=None):
-    slug = slugify(instance.title, allow_unicode=True)
-    if new_slug is not None:
-        slug = new_slug
-    qs = Article.objects.filter(slug=slug).order_by('-id')
-    exists = qs.exists()
-    if exists:
-        new_slug = '%s-%s' % (slug, qs.first().id)
-        return create_slug(instance, new_slug=new_slug)
-    return slug

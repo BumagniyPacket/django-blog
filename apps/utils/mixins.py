@@ -1,6 +1,8 @@
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
+from apps.utils.utils import create_slug
+
 CACHE_TTL = getattr(settings, 'CACHE_TTL', 360)
 
 
@@ -16,3 +18,9 @@ class CacheMixin:
             self.get_cache_timeout())(
             super(CacheMixin, self).dispatch)(*args, **kwargs)
 
+
+class GenerateSlugMixin:
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = create_slug(self)
+        super().save(*args, **kwargs)
