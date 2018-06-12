@@ -61,6 +61,8 @@ CUSTOM_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'django_filters',
+    'rest_framework',
     'pagedown',
     'markdown_deux',
     'easy_thumbnails',
@@ -230,16 +232,9 @@ ROOT_URLCONF = 'core.urls'
 WSGI_APPLICATION = 'core.wsgi.application'
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
-    ),
-    # 'DEFAULT_PAGINATION_CLASS': 'apps.common.pagination.DefaultProjectPagination',
+    'DEFAULT_PAGINATION_CLASS': 'apps.common.pagination.DefaultPagination',
     'PAGE_SIZE': 10,
 
-    'EXCEPTION_HANDLER': 'apps.common.exceptions.custom_exception_handler',
     'COERCE_DECIMAL_TO_STRING': False,
     'ORDERING_PARAM': 'o',
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
