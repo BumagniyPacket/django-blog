@@ -1,9 +1,0 @@
-DEBUG=False
-DJANGO_DEBUG=False
-SECRET_KEY="lorem ipsum dolor sit amet"
-DB_NAME=blog_db
-DB_USER=postgres
-DB_PASSWORD=password
-DB_SERVICE=postgres
-DB_HOST=postgres
-DB_PORT=5432
