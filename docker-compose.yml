@@ -1,54 +1,41 @@
-version: '2'
+version: '3'
+
+volumes:
+  postgres_dev_data:
+  postgres_dev_backup:
 
 services:
 
-  web:
-    restart: always
-    build: ./web/
-    container_name: web
-    expose:
-      - "8000"
-    links:
-      - postgres:postgres
-      - redis:redis
-    env_file: env
-    volumes:
-      - ./web:/data/web
-    command: >
-      /bin/sh -c "./manage.py makemigrations articles &&
-      ./manage.py migrate &&
-      echo yes | ./manage.py collectstatic &&
-      echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'pass')\" | ./manage.py shell &&
-      gunicorn blog.wsgi:application -w 2 -b :8000"
-
-  nginx:
-    restart: always
-    build: ./nginx/
-    container_name: nginx
-    ports:
-      - "80:80"
-    volumes_from:
-      - web
-    links:
-      - web:web
-
   postgres:
-    restart: always
-    image: postgres:latest
-    container_name: postgres
-    # build: ./postgres/
-    volumes:
-      - ./postgres/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-      - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/backups:/backup
-    env_file:
-      - env
+    container_name: blog_postgres
+    network_mode: "bridge"
+    build:
+      context: ./dockerfiles/postgres/
+    image: blog-postgres:latest
     ports:
-      - "5432"
+      - "5432:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - postgres_dev_backup:/backups
+      - ./dockerfiles/postgres/dump/:/docker-entrypoint-initdb.d/
+    env_file: env/postgres.env
 
-  redis:
-    restart: always
-    image: redis:latest
-    container_name: redis
-    expose:
-      - "6379"
+  django:
+    container_name: blog_django
+    network_mode: "bridge"
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    env_file: env/django.env
+    build:
+      context: .
+      dockerfile: ./dockerfiles/django/Dockerfile
+    image: blog-django:latest
+    user: django
+    command: /start_dev.sh
+    volumes:
+      - .:/code
+      - ./public:/code/public
+    ports:
+      - "8000:8000"

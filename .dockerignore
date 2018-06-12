@@ -4,5 +4,3 @@
 Dockerfile
 README.md
 LICENSE
-/web/blog/local_settings.py
-/.venv/
