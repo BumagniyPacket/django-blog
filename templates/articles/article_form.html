@@ -1,0 +1,42 @@
+{% extends 'articles/base.html' %}
+
+{% block head_title %}{{ instance.title }} | {{ block.super }} {% endblock head_title %}
+
+{% block head_extra %}
+{{ form.media }}
+{% endblock head_extra %}
+
+{% block content %}
+
+<div class="item">
+  <div id="post_form">
+    <input id="tab1" type="radio" name="tabs" checked>
+    <label class="tabLabel" for="tab1"><h3>Редактирование</h3></label>
+
+    <input id="tab2" type="radio" name="tabs">
+    <label class="tabLabel" for="tab2"><h3>Предпросмотр</h3></label>
+
+    <section id="content1">
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Сохранить пост" name="" id="">
+      </form>
+    </section>
+
+    <section id="content2">
+      <h1 id='preview-title'></h1>
+      <p id='preview-content'></p>
+    </section>
+
+    <div class="delete-post">
+      <input type="submit" value="Удалить пост" onclick="window.location.replace('{{ instance.get_delete_url }}')">
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+{% load staticfiles %}
+{% block scripts %}
+<script src='{% static "js/form.js" %}'></script>
+{% endblock %}

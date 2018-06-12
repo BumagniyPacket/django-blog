@@ -1,0 +1,40 @@
+{% extends 'articles/base.html' %}
+
+{% block head_title %}{{ instance.title }} | {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+{% load comments %}
+
+<div class="item">
+  <h1>{{ instance.title }}
+    {% if user.is_superuser %}
+    | <a href="{{ instance.get_edit_url }}">Редактировать</a>
+    {% endif %}
+  </h1>
+  <p class="description">
+    {% if instance.user.get_full_name %}
+    Автор: <b>{{ instance.user.get_full_name }}</b>
+    {% else %}
+    Автор: <b>{{ instance.user }}</b>
+    {% endif %}
+    | {{ instance.timestamp|timesince }} назад
+    | <b>Просмотров</b>: {{ instance.views }}
+  </p>
+  <hr>
+  <img src="{{ instance.image }}" alt="">
+  <i><p class="description">{{ instance.description }}</p></i>
+  {% load markdown_deux_tags %}
+  <div class="content-markdown">
+    <p class="description">{{ instance.content|markdown }}</p>
+  </div>
+
+  {% if instance.timestamp != instance.updated %}
+  <p class="updated"><b>Отрадактировано</b>: {{ instance.updated }}</p>
+  {% endif %}
+
+  {% load disqus_tags %}
+  {% disqus_show_comments %}
+
+</div>
+
+{% endblock content %}

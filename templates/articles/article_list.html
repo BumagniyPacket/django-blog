@@ -1,0 +1,54 @@
+{% extends 'articles/base.html' %}
+
+{% block head_title %}{{ instance.title }} {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+
+<div class="content">
+  {% for obj in object_list %}
+  <div class="item item-list">
+    <h1 class="title">{% if obj.draft %}[ DRAFT ] {% endif %}
+      <a href="{{ obj.get_absolute_url }}">{{ obj.title|upper }}</a>
+    </h1>
+    <hr>
+    {% if obj.image %}
+    <img src="{{ obj.image }}" alt="">
+    {% endif %}
+    <p class="description">{{ obj.description }}
+      <a href="{{ obj.get_absolute_url }}">Читать дальше</a>
+    </p>
+    <br>
+    <div class="date">
+      <p>{{ obj.timestamp|timesince }} назад</p>
+    </div>
+  </div>
+  {% empty %}
+  <div class="item empty-item-list">
+    <h2>По запросу "{{ request.GET.q }}" ничего не найдено</h2>
+  </div>
+  {% endfor %}
+</div>
+
+{% if paginator.num_pages > 1 %}
+<div class="pagination center">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="page={{ page_obj.previous_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">&lsaquo;-</a>
+    {% else %}
+      <span>&lsaquo;-</span>
+    {% endif %}
+
+    <span class="current">
+      Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="page={{ page_obj.next_page_number }}{% if request.GET.q %}?q={{ request.GET.q }}{% endif %}">-&rsaquo;</a>
+    {% else %}
+      <span>-&rsaquo;</span>
+    {% endif %}
+  </span>
+</div>
+{% endif %}
+
+{% endblock content %}

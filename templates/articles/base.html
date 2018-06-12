@@ -1,0 +1,47 @@
+<!doctype html>
+{% load staticfiles %}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block head_title %}Roma blog{% endblock head_title %}</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <link rel="shortcut icon" type="image/png" href="{% static 'articles/favicon.ico' %}"/>
+  {% block head_extra %} {% endblock head_extra %}
+  <link rel="stylesheet" href="{% static 'articles/css/style.css' %}"/>
+
+</head>
+<body>
+<div id="page-preloader">
+  <span class="spinner"></span>
+</div>
+{% include "articles/header.html" %}
+<div class="container">
+  {% block content %}
+  {% endblock %}
+
+  {% include "articles/footer.html" %}
+</div>
+
+{# back to top #}
+<div id="toTopWrapper" style="display: none;">
+  <div id="toTop">
+    <svg class="icon-svg icon-svg_scroll-up" width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"
+         version="1.1"
+         role="img">
+      <path transform="rotate(90, 16, 16)" d="m27.2,6.2-10.4,10l10.4,10l-6,5.8l-16.4,-16l16.4,-16"></path>
+    </svg>
+  </div>
+</div>
+{# end back to top #}
+
+<script src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+<script src='{% static "articles/js/script.js" %}'></script>
+{% block scripts %}
+{% endblock %}
+{% include 'articles/messages_display.html' %}
+</body>
+
+</html>
