@@ -64,10 +64,23 @@ CUSTOM_APPS = [
 THIRD_PARTY_APPS = [
     'pagedown',
     'markdown_deux',
-    'disqus'
+    'easy_thumbnails',
+    'disqus',
+    'filer'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
+
+THUMBNAIL_HIGH_RESOLUTION = True
+THUMBNAIL_PROCESSORS = (
+    'easy_thumbnails.processors.colorspace',
+    'easy_thumbnails.processors.autocrop',
+    'filer.thumbnail_processors.scale_and_crop_with_subject_location',
+    'easy_thumbnails.processors.filters',
+)
+FILER_CANONICAL_URL = 'sharing/'
+FILER_DEBUG = DEBUG
+FILER_ENABLE_LOGGING = DEBUG
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

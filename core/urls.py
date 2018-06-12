@@ -17,12 +17,25 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
-    url(r'^admin', include(admin.site.urls)),
-    url(r'', include('apps.articles.urls', namespace='articles')),
-    url(r'^comments/', include('apps.comments.urls', namespace='comments')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^filer/', include('filer.urls')),
 ]
 
+urlpatterns += [
+    url(r'^api/v1/', include([
+        url(r'^article/', include('apps.articles.urls')),
+    ], namespace='v1'))
+]
+
+urlpatterns += [
+    url('', include('apps.frontend.urls')),
+]
+
+
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += staticfiles_urlpatterns()
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

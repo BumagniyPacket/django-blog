@@ -3,6 +3,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
 
+from filer.fields.image import FilerImageField
+
 
 class ArticleManager(models.Manager):
     def published(self):
@@ -18,16 +20,45 @@ class Article(models.Model):
 
     objects = ArticleManager()
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1, verbose_name='Пользователь')
-    title = models.CharField(max_length=120, verbose_name='Заголовок поста')
-    image = models.URLField(blank=True, verbose_name='Ссылка на изображение')
-    description = models.TextField(max_length=400, verbose_name='Описание поста')
-    slug = models.SlugField(unique=True, blank=True, verbose_name='Слаг')
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        default=1,
+        verbose_name='Пользователь'
+    )
+    title = models.CharField(
+        max_length=120,
+        verbose_name='Заголовок поста'
+    )
+    image = FilerImageField(
+        blank=True, null=True,
+        verbose_name='Изображение',
+    )
+    description = models.TextField(
+        max_length=400,
+        verbose_name='Описание поста'
+    )
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        verbose_name='Слаг'
+    )
     content = models.TextField(verbose_name='Контент')
-    draft = models.BooleanField(default=False, verbose_name='В процессе написания')
-    timestamp = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
-    updated = models.DateTimeField(auto_now=True, verbose_name='Обновлен')
-    views = models.IntegerField(default=0, verbose_name='Просмотров')
+    draft = models.BooleanField(
+        default=False,
+        verbose_name='В процессе написания'
+    )
+    timestamp = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name='Время создания'
+    )
+    updated = models.DateTimeField(
+        auto_now=True,
+        verbose_name='Обновлен'
+    )
+    views = models.IntegerField(
+        default=0,
+        verbose_name='Просмотров'
+    )
 
     def __str__(self):
         return self.title
