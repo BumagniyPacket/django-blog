@@ -4,9 +4,10 @@
 /*.sqlite
 *migrations/
 *.pyc
-*local_settings.py
+core/settings/local_settings.py
 .DS_Store
 /.venv/
 /web/static_cdn/
 /postgres/backups/
 /postgres/data/
+/.coverage
