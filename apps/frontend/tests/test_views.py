@@ -34,3 +34,14 @@ class ArticleViewTest(TestCase):
             format='json',
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_articles_detail_OK(self):
+        self.client.credentials()
+        response = self.client.get(
+            reverse(
+                'frontend:article-detail',
+                kwargs={'pk': Article.objects.first().pk}
+            ),
+            format='json',
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
