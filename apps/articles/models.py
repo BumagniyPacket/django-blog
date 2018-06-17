@@ -1,10 +1,9 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
-
 from filer.fields.image import FilerImageField
 
-from apps.utils.mixins import GenerateSlugMixin
+from apps.common.mixins import GenerateSlugMixin
 
 
 class ArticleManager(models.Manager):

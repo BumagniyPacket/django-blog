@@ -1,7 +1,8 @@
 from django.views.decorators.cache import cache_page
 from django.conf import settings
 
-from apps.utils.utils import create_slug
+from apps.common.utils import create_slug
+
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', 360)
 
