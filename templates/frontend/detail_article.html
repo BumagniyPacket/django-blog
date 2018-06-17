@@ -1,0 +1,26 @@
+{% extends 'frontend/base.html' %}
+
+{% block head_title %}{{ object.title }} | {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+
+<div class="article__detail">
+  <!-- pri navedenii na kartinku pokazivat opisanie? -->
+  <p class="article__title">{{ object.title }}</p>
+  <p class="article__date">{{ object.timestamp }}</p>
+  <div class="article__image inner_image">
+    <img src="{{ object.image.url }}"></a>
+  </div>
+  <div class="article__content">
+    {% autoescape off %}{{ object.content }}{% endautoescape %}
+  </div>
+
+  {% if object.timestamp != object.updated %}
+  <p class="article__updated"><b>Отрадактировано</b>: {{ object.updated }}</p>
+  {% endif %}
+
+  {% load disqus_tags %}
+  {% disqus_show_comments %}
+</div>
+
+{% endblock content %}
