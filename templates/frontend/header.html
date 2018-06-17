@@ -1,29 +1,11 @@
-<div class="header">
-  <div class="container blog-title">
-    <h2>Этот бложик самый лучший бложик на земле.</h2>
+<header>
+  <div>
+    <h1>BP's blog</h1>
+    <nav>
+      <li><a href="">Главная</a></li>
+      <li><a href="">Абоут</a></li>
+      <li><a href="">Контакты</a></li>
+      <li><a href="">Поиск</a></li>
+    </nav>
   </div>
-  <div class="menu">
-    <div class="container">
-      <div class="navigation">
-        <ul>
-          <li>
-            <a href="{% url 'articles:list' %}"><span>Главная</span></a>
-          </li>
-          <li>Абоут</li>
-          {% if request.user.is_superuser %}
-          <li>
-            <a href="{% url 'articles:create' %}"><span>Создать пост</span></a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
-      <div class="search-wrapper">
-        <form class="search-form" action="{% url 'articles:list' %}" method="get">
-          <input type="text" name="q" id="search" class="search-field" placeholder="Введите слова для поиска"
-                 value="{{ request.GET.q }}">
-        </form>
-      </div>
-      <div class="search-icon"></div>
-    </div>
-  </div>
-</div>
+</header>
