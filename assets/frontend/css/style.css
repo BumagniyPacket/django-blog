@@ -85,7 +85,7 @@ nav > li {
 
 .backdrop {
 	background-color: black;
-	background-image: url('http://localhost:8000/media/filer_public/bf/a7/bfa75506-bcfc-4f00-be16-9a38b5be2721/bg3.jpg');
+	background-image: url(/bg/);
 	background-size: cover;
 
 	display: block;
