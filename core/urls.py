@@ -28,11 +28,13 @@ urlpatterns = [
 urlpatterns += [
     url(r'^api/v1/', include([
         url(r'^article/', include('apps.articles.urls')),
-    ], namespace='v1'))
+    ], namespace='v1')),
+    url('', include('apps.frontend.urls', namespace='frontend')),
 ]
 
 urlpatterns += [
-    url('', include('apps.frontend.urls', namespace='frontend')),
+    # https://ckeditor.com/legal/ckeditor-oss-license/
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 
 

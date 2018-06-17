@@ -1,3 +1,4 @@
+from ckeditor.fields import RichTextField
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -42,7 +43,7 @@ class Article(GenerateSlugMixin, models.Model):
         blank=True,
         verbose_name='Слаг',
     )
-    content = models.TextField(verbose_name='Контент')
+    content = RichTextField(verbose_name='Контент')
     draft = models.BooleanField(
         default=False,
         verbose_name='В процессе написания'

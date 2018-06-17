@@ -67,7 +67,9 @@ THIRD_PARTY_APPS = [
     'markdown_deux',
     'easy_thumbnails',
     'disqus',
-    'filer'
+    'filer',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -257,3 +259,7 @@ MODELTRANSLATION_DEBUG = DEBUG
 # TODO sites
 # defaut site id for development environment
 SITE_ID = 1
+
+# CKEDITOR
+CKEDITOR_UPLOAD_PATH = os.path.join(MEDIA_URL, 'ckeditor')
+
