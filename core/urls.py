@@ -32,7 +32,7 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url('', include('apps.frontend.urls')),
+    url('', include('apps.frontend.urls', namespace='frontend')),
 ]
 
 
