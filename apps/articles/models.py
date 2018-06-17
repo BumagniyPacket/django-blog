@@ -67,6 +67,11 @@ class Article(GenerateSlugMixin, models.Model):
         on_delete=models.CASCADE,
         blank=False
     )
+    tags = models.ManyToManyField(
+        'articles.Tag',
+        related_name='articles',
+        blank=False, null=False
+    )
 
     def __str__(self):
         return self.title
@@ -91,6 +96,17 @@ class Category(models.Model):
 
     name = models.CharField(verbose_name='Имя', max_length=35)
     description = models.TextField(verbose_name='Описание', max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
+class Tag(models.Model):
+    class Meta:
+        verbose_name = 'Блог - тег'
+        verbose_name_plural = 'Блог - теги'
+
+    name = models.CharField(verbose_name='Имя', max_length=35)
 
     def __str__(self):
         return self.name
