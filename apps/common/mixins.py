@@ -7,7 +7,7 @@ from apps.common.utils import create_slug
 CACHE_TTL = getattr(settings, 'CACHE_TTL', 360)
 
 
-class CacheMixin:
+class CacheMixin:  # pragma: no cover
     """Кэшируем страницы"""
     cache_timeout = CACHE_TTL
 
