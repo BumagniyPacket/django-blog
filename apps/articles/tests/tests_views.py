@@ -4,7 +4,7 @@ from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.articles.models import Article
+from apps.articles.models import Article, Category
 
 
 class ArticleViewTest(TestCase):
@@ -17,6 +17,10 @@ class ArticleViewTest(TestCase):
         )
         self.user.clean()
         self.client = APIClient()
+        self.category = Category.objects.create(
+            name='Category name',
+            description='Some description'
+        )
 
         for i in range(25):
             Article.objects.create(
@@ -24,7 +28,7 @@ class ArticleViewTest(TestCase):
                 title=f'some title {i}',
                 description='some description',
                 content='some content',
-
+                category=self.category
             )
 
     def test_articles_list_OK(self):

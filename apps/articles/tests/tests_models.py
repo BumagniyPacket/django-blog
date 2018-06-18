@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from apps.articles.models import Article
+from apps.articles.models import Article, Category
 
 
 class ArticleTestCase(TestCase):
@@ -11,11 +11,16 @@ class ArticleTestCase(TestCase):
             email='u@DOMAIN.com',
             password='password',
         )
+        self.category = Category.objects.create(
+            name='Category name',
+            description='Some description'
+        )
         self.article = Article.objects.create(
             user=self.user,
             title='Test title 4 testing',
             description='Some description',
-            content='Moar content'
+            content='Moar content',
+            category=self.category
         )
 
     # test verbose name
@@ -121,7 +126,8 @@ class ArticleTestCase(TestCase):
             user=self.user,
             title='Тестовый заголовок',
             description='Some description',
-            content='Moar content'
+            content='Moar content',
+            category=self.category
         )
         article = Article.objects.get(pk=article.pk)
         expected = 'тестовый-заголовок'
@@ -132,7 +138,8 @@ class ArticleTestCase(TestCase):
             user=self.user,
             title='Test title 4 testing',
             description='Some description',
-            content='Moar content'
+            content='Moar content',
+            category=self.category
         )
         article = Article.objects.get(pk=article.pk)
         expected = 'test-title-4-testing-1'
@@ -149,6 +156,7 @@ class ArticleTestCase(TestCase):
             title='Test title 4 testing',
             description='Some description',
             content='Moar content',
+            category=self.category
         )
         published = Article.objects.published()
         self.assertEquals(len(published), 2)
@@ -166,7 +174,8 @@ class ArticleTestCase(TestCase):
             title='Test title 4 testing',
             description='Some description',
             content='Moar content',
-            draft=True
+            draft=True,
+            category=self.category
         )
         published = Article.objects.published()
         self.assertEquals(len(published), 1)
