@@ -5,11 +5,7 @@ from django.db import models
 from filer.fields.image import FilerImageField
 
 from apps.common.mixins import GenerateSlugMixin
-
-
-class ArticleManager(models.Manager):
-    def published(self):
-        return super().filter(draft=False)
+from .managers import ArticleManager
 
 
 class Article(GenerateSlugMixin, models.Model):
