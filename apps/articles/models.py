@@ -66,7 +66,7 @@ class Article(GenerateSlugMixin, models.Model):
     tags = models.ManyToManyField(
         'articles.Tag',
         related_name='articles',
-        blank=False, null=False
+        blank=False,
     )
 
     def __str__(self):
