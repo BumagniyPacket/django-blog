@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Article
+from .models import Article, Category
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -12,7 +12,16 @@ class ArticleListSerializer(serializers.ModelSerializer):
         fields = ('pk', 'title', 'url', 'image', 'description', 'timestamp')
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
 class ArticleDetailSerializer(serializers.ModelSerializer):
+    image = serializers.ReadOnlyField(source='image.url')
+    category = CategorySerializer()
+
     class Meta:
         model = Article
         fields = '__all__'
