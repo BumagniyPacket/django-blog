@@ -2,16 +2,15 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from random import choice
 
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, TemplateView
 from django.views import View
 from filer.models import Folder
 
 from apps.articles.models import Article
 
 
-class BlogMainFrontendView(ListView):
-    template_name = 'frontend/blog_list.html'
-    queryset = Article.objects.published()
+class BlogMainFrontendView(TemplateView):
+    template_name = 'frontend/blog_article_list.html'
 
 
 class BlogDetailFrontendView(DetailView):

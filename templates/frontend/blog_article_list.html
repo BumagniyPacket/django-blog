@@ -1,0 +1,15 @@
+{% extends 'frontend/base.html' %}
+{% load staticfiles %}
+{% block head_title %}{{ instance.title }} {{ block.super }} {% endblock head_title %}
+
+{% block content %}
+
+<div class="articles">
+</div>
+<div class="btn__next"></div>
+
+
+{% endblock content %}
+{% block scripts %}
+<script src='{% static "frontend/js/renders/render-list.js" %}'></script>
+{% endblock %}
