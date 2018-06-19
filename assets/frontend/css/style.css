@@ -107,6 +107,10 @@ nav > li {
 	position: relative;
 }
 
+.btn__next {
+    cursor: pointer;
+}
+
 .next_page {
 	width: 100%;
 	text-align: center;
