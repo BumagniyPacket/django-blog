@@ -27,7 +27,7 @@ class Article(GenerateSlugMixin, models.Model):
         verbose_name='Заголовок поста'
     )
     image = FilerImageField(
-        blank=True, null=True,
+        blank=False, null=False,
         verbose_name='Изображение',
     )
     description = models.TextField(
