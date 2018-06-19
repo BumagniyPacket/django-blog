@@ -13,6 +13,10 @@ class BlogMainFrontendView(TemplateView):
     template_name = 'frontend/blog_article_list.html'
 
 
+class BlogAboutFrontendView(TemplateView):
+    template_name = 'frontend/blog_about.html'
+
+
 class BlogDetailFrontendView(DetailView):
     model = Article
     template_name = 'frontend/detail_article.html'
