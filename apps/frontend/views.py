@@ -19,7 +19,7 @@ class BlogAboutFrontendView(TemplateView):
 
 class BlogDetailFrontendView(DetailView):
     model = Article
-    template_name = 'frontend/detail_article.html'
+    template_name = 'frontend/blog_article_detail.html'
 
 
 class RandomBackgroundFrontendView(View):
