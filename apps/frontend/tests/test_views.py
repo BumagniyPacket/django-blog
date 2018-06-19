@@ -43,7 +43,7 @@ class ArticleViewTest(TestCase):
         self.client.credentials()
         response = self.client.get(
             reverse(
-                'frontend:article-detail',
+                'frontend:blog-article-detail',
                 kwargs={'pk': Article.objects.first().pk}
             ),
             format='json',
