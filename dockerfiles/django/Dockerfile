@@ -14,13 +14,9 @@ RUN apk -U upgrade && echo http://nl.alpinelinux.org/alpine/edge/testing >> /etc
     rm -r /root/.cache && \
     ln -s /usr/bin/python3 /usr/bin/python
 
-COPY .fonts /home/django/.fonts/
 RUN mkdir -p /code && chown -R django /code
 WORKDIR /code
 ADD . /code/
-
-RUN chmod +x ./scripts/vistafonts-installer.sh
-RUN ./scripts/vistafonts-installer.sh
 
 RUN pip3 install -r requirements.txt --no-cache-dir
 
