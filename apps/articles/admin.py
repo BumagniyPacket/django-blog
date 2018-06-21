@@ -5,10 +5,11 @@ from .models import Article, Category, Tag
 
 class PostModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'draft')
-    list_filter = ('timestamp', 'tags')
+    list_filter = ('timestamp', 'category', 'tags')
     search_fields = ('title', 'description', 'content')
-    fields = ('title', 'category', 'tags', 'image', 'description', 'content',
-              'draft')
+    fields = (
+        'title', 'category', 'tags', 'image', 'description', 'content', 'draft'
+    )
 
     class Meta:
         model = Article
