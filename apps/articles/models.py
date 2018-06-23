@@ -74,7 +74,7 @@ class Article(GenerateSlugMixin, models.Model):
 
     @property
     def get_absolute_url(self):
-        return reverse('v1:article-detail', kwargs={'pk': self.pk})
+        return reverse('frontend:blog-article-detail', kwargs={'pk': self.pk})
 
     def add_view(self):
         self.views += 1
