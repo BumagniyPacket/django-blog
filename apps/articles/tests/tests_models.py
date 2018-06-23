@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from apps.articles.models import Article, Category, Tag
+from apps.articles.models import Article, Tag
+from apps.categories.models import Category
 
 
 class ArticleTestCase(TestCase):
@@ -179,18 +180,6 @@ class ArticleTestCase(TestCase):
         )
         published = Article.objects.published()
         self.assertEquals(len(published), 1)
-
-
-class CategoryTestCase(TestCase):
-    def setUp(self):
-        self.category_name = 'category name'
-        self.category = Category.objects.create(
-            name=self.category_name,
-            description='some description'
-        )
-
-    def test_str_method(self):
-        self.assertEqual(self.category_name, str(self.category))
 
 
 class TagTestCase(TestCase):

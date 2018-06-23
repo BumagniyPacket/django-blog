@@ -57,7 +57,7 @@ class Article(GenerateSlugMixin, models.Model):
         verbose_name='Просмотров'
     )
     category = models.ForeignKey(
-        'articles.Category',
+        'categories.Category',
         related_name='articles',
         verbose_name='Категория',
         on_delete=models.CASCADE,
@@ -83,18 +83,6 @@ class Article(GenerateSlugMixin, models.Model):
     def get_views(self):
         views = self.views
         return views
-
-
-class Category(models.Model):
-    class Meta:
-        verbose_name = 'Блог - категория'
-        verbose_name_plural = 'Блог - категории'
-
-    name = models.CharField(verbose_name='Имя', max_length=35)
-    description = models.TextField(verbose_name='Описание', max_length=200)
-
-    def __str__(self):
-        return self.name
 
 
 class Tag(models.Model):

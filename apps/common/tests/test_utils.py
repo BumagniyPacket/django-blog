@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
 
-from apps.articles.models import Article, Category
+from apps.articles.models import Article
+from apps.categories.models import Category
 from apps.common.utils import create_slug
 
 

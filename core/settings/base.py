@@ -60,6 +60,7 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     'apps.articles',
+    'apps.categories',
 ]
 
 THIRD_PARTY_APPS = [
