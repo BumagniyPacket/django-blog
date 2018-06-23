@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from .models import Article, Tag
+from .models import Article
 from apps.categories.serializers import CategorySerializer
+from apps.tags.serializers import TagSerializer
 
 
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -11,12 +12,6 @@ class ArticleListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('title', 'url', 'image', 'description', 'timestamp')
-
-
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
-        fields = '__all__'
 
 
 class ArticleDetailSerializer(serializers.ModelSerializer):

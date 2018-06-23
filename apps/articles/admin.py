@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, Tag
+from .models import Article
 
 
 class PostModelAdmin(admin.ModelAdmin):
@@ -15,11 +15,4 @@ class PostModelAdmin(admin.ModelAdmin):
         model = Article
 
 
-class TagAdmin(admin.ModelAdmin):
-    class Meta:
-        model = Tag
-        fields = '__all__'
-
-
 admin.site.register(Article, PostModelAdmin)
-admin.site.register(Tag, TagAdmin)

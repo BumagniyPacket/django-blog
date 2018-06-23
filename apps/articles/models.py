@@ -64,7 +64,7 @@ class Article(GenerateSlugMixin, models.Model):
         blank=False
     )
     tags = models.ManyToManyField(
-        'articles.Tag',
+        'tags.Tag',
         related_name='articles',
         blank=False,
     )
@@ -83,14 +83,3 @@ class Article(GenerateSlugMixin, models.Model):
     def get_views(self):
         views = self.views
         return views
-
-
-class Tag(models.Model):
-    class Meta:
-        verbose_name = 'Блог - тег'
-        verbose_name_plural = 'Блог - теги'
-
-    name = models.CharField(verbose_name='Имя', max_length=35)
-
-    def __str__(self):
-        return self.name
