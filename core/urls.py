@@ -22,8 +22,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
-    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')), # Django JET dashboard URLS
+    # Django JET URLS
+    url(r'^jet/', include('jet.urls', 'jet')),
+    # Django JET dashboard URLS
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^filer/', include('filer.urls')),
 ]
 
@@ -33,7 +35,10 @@ urlpatterns += [
         url(r'^category/', include('apps.categories.urls')),
         url(r'^tag/', include('apps.tags.urls')),
     ], namespace='v1')),
-    url('', include('apps.frontend.urls', namespace='frontend')),
+    url(
+        r'^blog/',
+        include('apps.frontend-blog.urls', namespace='frontend-blog')
+    ),
 ]
 
 urlpatterns += [
