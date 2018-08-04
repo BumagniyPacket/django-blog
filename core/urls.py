@@ -39,6 +39,9 @@ urlpatterns += [
         r'^blog/',
         include('apps.frontend-blog.urls', namespace='frontend-blog')
     ),
+    url(
+        '', include('apps.frontend-main.urls', namespace='frontend-main')
+    ),
 ]
 
 urlpatterns += [

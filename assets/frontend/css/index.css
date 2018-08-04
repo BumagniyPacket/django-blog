@@ -1,0 +1,58 @@
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	background-color: white;
+    overflow: hidden;
+	color: black;
+	font-family: 'Special Elite', cursive;
+}
+
+li {
+	list-style: none;
+}
+
+li:before {
+	content: '~';
+	padding-right: 5px;
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	color: grey;
+}
+
+.outer {
+    width: 100%;
+    padding: 0;
+    display: table;
+    height: 100%;
+    position: absolute;
+}
+
+.inner {
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.main {
+	text-align: left;
+	width: 300px;
+	margin: 0 auto;
+}
+
+.title {
+    font-size: 3.5rem;
+    font-weight: 300;
+    position: relative;
+}
+
+.whoami {
+	text-align: center;
+	margin: 0 0 1rem 0;
+}
