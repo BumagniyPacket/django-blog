@@ -10,4 +10,5 @@ omit = *migrations*,
        *production*,
        *celery*,
        *no_docker*,
+       *apps.py,
        gunicorn.py
