@@ -10,16 +10,16 @@ from apps.articles.models import Article
 
 
 class BlogMainFrontendView(TemplateView):
-    template_name = 'frontend/blog_article_list.html'
-
-
-class BlogAboutFrontendView(TemplateView):
-    template_name = 'frontend/blog_about.html'
+    template_name = 'frontend_blog/article_list.html'
 
 
 class BlogDetailFrontendView(DetailView):
     model = Article
-    template_name = 'frontend/blog_article_detail.html'
+    template_name = 'frontend_blog/article_detail.html'
+
+
+class BlogAboutFrontendView(TemplateView):
+    template_name = 'frontend_blog/about.html'
 
 
 class RandomBackgroundFrontendView(View):

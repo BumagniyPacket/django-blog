@@ -17,12 +17,12 @@
   </div>
 
 	<div class="container">
-    {% include "frontend/header.html" %}
+    {% include "frontend_blog/header.html" %}
     {% block content %}{% endblock %}
 
 		<!-- TODO: sdelat' dinamicheskuu imajku mojno -->
 		<div class="backdrop"></div>
-    {% include "frontend/footer.html" %}
+    {% include "frontend_blog/footer.html" %}
 	</div>
   <script src="https://code.jquery.com/jquery-3.2.1.js"
         integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
@@ -30,6 +30,6 @@
   <script src='{% static "frontend/js/script.js" %}'></script>
   {% block scripts %}
   {% endblock %}
-  {% include 'frontend/messages_display.html' %}
+  {% include 'frontend_blog/messages_display.html' %}
 </body>
 </html>
