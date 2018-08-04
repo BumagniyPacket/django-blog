@@ -37,10 +37,10 @@ urlpatterns += [
     ], namespace='v1')),
     url(
         r'^blog/',
-        include('apps.frontend-blog.urls', namespace='frontend-blog')
+        include('apps.frontend_blog.urls', namespace='frontend-blog')
     ),
     url(
-        '', include('apps.frontend-main.urls', namespace='frontend-main')
+        '', include('apps.frontend_main.urls', namespace='frontend-main')
     ),
 ]
 
