@@ -4,7 +4,6 @@ from .views import (
     BlogMainFrontendView,
     BlogDetailFrontendView,
     RandomBackgroundFrontendView,
-    BlogAboutFrontendView,
 )
 
 urlpatterns = [
@@ -12,10 +11,6 @@ urlpatterns = [
     url(
         r'^article/(?P<pk>\w+)/$', BlogDetailFrontendView.as_view(),
         name='blog-article-detail'
-    ),
-    url(
-        r'^about/$', BlogAboutFrontendView.as_view(),
-        name='blog-about'
     ),
     url(
         r'^bg/$', RandomBackgroundFrontendView.as_view(),

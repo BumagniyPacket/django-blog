@@ -18,10 +18,6 @@ class BlogDetailFrontendView(DetailView):
     template_name = 'frontend_blog/article_detail.html'
 
 
-class BlogAboutFrontendView(TemplateView):
-    template_name = 'frontend_blog/about.html'
-
-
 class RandomBackgroundFrontendView(View):
     def get(self, *args, **kwargs):
         folder = get_object_or_404(Folder, name='backgrounds')
