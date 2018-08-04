@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
-urlpatterns = [
+admin_urls = [
     url(r'^admin/', include(admin.site.urls)),
     # Django JET URLS
     url(r'^jet/', include('jet.urls', 'jet')),
@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^filer/', include('filer.urls')),
 ]
 
-urlpatterns += [
+custom_urls = [
     url(r'^api/v1/', include([
         url(r'^article/', include('apps.articles.urls')),
         url(r'^category/', include('apps.categories.urls')),
@@ -44,10 +44,13 @@ urlpatterns += [
     ),
 ]
 
-urlpatterns += [
+editor_urls = [
     # https://ckeditor.com/legal/ckeditor-oss-license/
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
+
+
+urlpatterns = admin_urls + custom_urls + editor_urls
 
 
 if settings.DEBUG:
